@@ -89,15 +89,10 @@
 
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="index.html" class="nav__link active-link">Inicio</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="Filtro.html" class="nav__link active-link">Filtro</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="Estoque-Saida.html" class="nav__link active-link">Saida</a>
-                    </li>
+                <li class="nav__item"><a href="index.html" class="nav__link active-link">Inicio</a></li>
+                <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
+                <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
+                <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
                 </ul>
 
                 <div class="nav__close" id="nav-close">
@@ -221,18 +216,21 @@
   <h1>Controle de Estoque</h1>
 
   <label for="item-name">Nome do Produto:</label>
-  <input type="text" id="item-name" placeholder="Ex: Parafuso M12" required>
+  <input type="text" id="item-name" placeholder="Item" required>
 
   <label for="quantity">Quantidade:</label>
-  <input type="number" id="quantity" placeholder="Ex: 100" required>
+  <input type="number" id="quantity" placeholder="Quantidade" required>
 
   <label for="operation-type">Operação:</label>
   <select id="operation-type" required>
     <option value="Entrada">Entrada</option>
   </select>
 
-<button id="save-btn" onclick="saveStock()">Adicionar</button>
-<button id="cancel-btn" onclick="cancelEdit()">Cancelar</button>
+<div style="display: flex; gap: 10px;">
+  <button id="save-btn" onclick="saveStock()">Adicionar</button>
+  <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
+</div>
+
 
   <div class="saved-data">
     <h2>Histórico de Movimentações</h2>
@@ -285,16 +283,20 @@
     }
   }
 
-  function editStock(index) {
-    const item = stockData[index];
-    document.getElementById('item-name').value = item.name;
-    document.getElementById('quantity').value = item.quantity;
-    document.getElementById('operation-type').value = item.operation;
+function editStock(index) {
+  const item = stockData[index];
+  document.getElementById('item-name').value = item.name;
+  document.getElementById('quantity').value = item.quantity;
 
-    editIndex = index;
-    document.getElementById('save-btn').textContent = 'Salvar Alterações';
-    document.getElementById('cancel-btn').style.display = 'inline-block'; // mostra botão cancelar
-  }
+  // Garante que o valor do select continue "Entrada"
+  document.getElementById('operation-type').value = "Entrada";
+
+  editIndex = index;
+  document.getElementById('save-btn').textContent = 'Salvar Alterações';
+  document.getElementById('cancel-btn').style.display = 'inline-block';
+}
+
+
 
   function cancelEdit() {
     clearInputs();
@@ -307,23 +309,22 @@ function updateStockList() {
   const list = document.getElementById('data-list');
   list.innerHTML = '';
 
-  // Filtra apenas entradas
-  const entradas = stockData.filter(item => item.operation === 'Entrada');
+  // Mostra só os itens de "Entrada"
+  stockData.forEach((item, index) => {
+    if (item.operation === 'Entrada') {
+      const li = document.createElement('li');
+      const icon = '📥';
 
-  entradas.forEach((item, index) => {
-    const li = document.createElement('li');
-    const icon = '📥'; // entrada sempre
-
-    li.innerHTML = `
-      ${icon} <strong>${item.operation}</strong> — ${item.name}<br>
-      🗓️ ${item.date}<br>
-      🔢 Quantidade: ${item.quantity}
-      <button class="edit-btn" onclick="editStock(${index})">✏️</button>
-      <button class="delete-btn" onclick="deleteStock(${index})">🗑️</button>
-    `;
-    list.appendChild(li);
+      li.innerHTML = `
+        ${icon} <strong>${item.operation}</strong> — ${item.name}<br>
+        🗓️ ${item.date}<br>
+        🔢 Quantidade: ${item.quantity}
+      `;
+      list.appendChild(li);
+    }
   });
 }
+
 
 
   function clearInputs() {
