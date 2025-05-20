@@ -221,10 +221,12 @@
   <label for="quantity">Quantidade:</label>
   <input type="number" id="quantity" placeholder="Quantidade" required>
 
-  <label for="operation-type">Operação:</label>
-  <select id="operation-type" required>
-    <option value="Saida">Saida</option>
-  </select>
+<label for="operation-type">Operação:</label>
+<select id="operation-type" required>
+  <option value="Entrada">Entrada</option>
+  <option value="Saída">Saída</option> <!-- ADICIONADO -->
+</select>
+
 
 <div style="display: flex; gap: 10px;">
   <button id="save-btn" onclick="saveStock()">Adicionar</button>
@@ -232,111 +234,192 @@
 </div>
 
 
-  <div class="saved-data">
+    <div class="saved-data">
+    <h2>Filtros</h2>
+
+    <label for="search-name">Buscar por nome:</label>
+    <input type="text" id="search-name" placeholder="Digite o nome do item">
+
+    <label for="filter-operation">Filtrar por operação:</label>
+    <select id="filter-operation">
+      <option value="Todos">Todos</option>
+      <option value="Entrada">Entrada</option>
+      <option value="Saída">Saída</option>
+      <option value="Saída (Editado)">Saída (Editado)</option>
+      <option value="Saída (Deletado)">Saída (Deletado)</option>
+    </select>
+
     <h2>Histórico de Movimentações</h2>
     <ul id="data-list"></ul>
   </div>
 
 <script>
   let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
-  let editIndex = -1;
+  let selectedItemIndex = -1;
 
   function saveStock() {
     const name = document.getElementById('item-name').value;
     const quantity = parseInt(document.getElementById('quantity').value);
-    const operation = document.getElementById('operation-type').value;
+    let operation = document.getElementById('operation-type').value;
     const date = new Date().toLocaleString();
 
-    if (!name || !quantity || !operation) {
+    if (!name || isNaN(quantity)) {
       alert('Preencha todos os campos!');
       return;
     }
 
-    if (editIndex === -1) {
-      // Modo adicionar: cria novo item
-      const entry = { name, quantity, operation, date };
-      stockData.push(entry);
+    if (selectedItemIndex >= 0) {
+      if (!operation.includes("(Editado)")) {
+        operation += " (Editado)";
+      }
+
+      stockData[selectedItemIndex] = { name, quantity, operation, date };
+      localStorage.setItem("estoqueData", JSON.stringify(stockData));
     } else {
-      // Modo editar: atualiza item existente
-      stockData[editIndex] = { name, quantity, operation, date };
-      editIndex = -1;
-      document.getElementById('save-btn').textContent = 'Adicionar';
-      document.getElementById('cancel-btn').style.display = 'none';
+      const newEntry = { name, quantity, operation, date };
+      stockData.push(newEntry);
+      localStorage.setItem("estoqueData", JSON.stringify(stockData));
     }
 
-    localStorage.setItem("estoqueData", JSON.stringify(stockData));
-    updateStockList();
-    clearInputs();
-  }
-
-  function deleteStock(index) {
-    const confirmDelete = confirm("Tem certeza que deseja deletar este item?");
-    if (!confirmDelete) return;
-
-    stockData.splice(index, 1);
-    localStorage.setItem("estoqueData", JSON.stringify(stockData));
-    updateStockList();
-
-    // Se estava editando o item deletado, cancela edição
-    if (editIndex === index) {
-      cancelEdit();
-    }
-  }
-
-function editStock(index) {
-  const item = stockData[index];
-  document.getElementById('item-name').value = item.name;
-  document.getElementById('quantity').value = item.quantity;
-
-  // Garante que o valor do select continue "Saida"
-  document.getElementById('operation-type').value = "Saida";
-
-  editIndex = index;
-  document.getElementById('save-btn').textContent = 'Salvar Alterações';
-  document.getElementById('cancel-btn').style.display = 'inline-block';
-}
-
-
-
-  function cancelEdit() {
-    clearInputs();
-    editIndex = -1;
+    selectedItemIndex = -1;
     document.getElementById('save-btn').textContent = 'Adicionar';
     document.getElementById('cancel-btn').style.display = 'none';
+
+    clearInputs();
+    updateStockList();
   }
 
-function updateStockList() {
-  const list = document.getElementById('data-list');
-  list.innerHTML = '';
+  function editStock(index) {
+    const item = stockData[index];
 
-  // Mostra só os itens de "Saida"
-  stockData.forEach((item, index) => {
-    if (item.operation === 'Saida') {
+    // Impede edição de itens deletados
+    if (item.operation.includes("Deletado")) {
+      alert("Este item foi deletado e não pode ser editado.");
+      return;
+    }
+
+    document.getElementById('item-name').value = item.name;
+    document.getElementById('quantity').value = item.quantity;
+    document.getElementById('operation-type').value = item.operation.replace(" (Editado)", "");
+
+    selectedItemIndex = index;
+    document.getElementById('save-btn').textContent = 'Salvar Alterações';
+    document.getElementById('cancel-btn').style.display = 'inline-block';
+
+    updateStockList();
+  }
+
+  // Função para deletar item
+  function deleteStock(index) {
+    if (confirm("Tem certeza que deseja deletar este item?")) {
+      // Marca o item como deletado, mantendo o histórico
+      stockData[index].operation = "Saída (Deletado)";
+      localStorage.setItem("estoqueData", JSON.stringify(stockData));
+
+      // Se o item deletado estiver em edição, cancela a edição
+      if (selectedItemIndex === index) {
+        selectedItemIndex = -1;
+        clearInputs();
+        document.getElementById('save-btn').textContent = 'Adicionar';
+        document.getElementById('cancel-btn').style.display = 'none';
+      }
+
+      updateStockList();
+    }
+  }
+
+  function updateStockList() {
+    const list = document.getElementById('data-list');
+    const searchName = document.getElementById('search-name')?.value.toLowerCase() || '';
+    const filterOperation = document.getElementById('filter-operation')?.value || 'Todos';
+
+    list.innerHTML = '';
+
+    stockData.slice().reverse().forEach((item, reverseIndex) => {
+      const index = stockData.length - 1 - reverseIndex;
+      const matchesName = item.name.toLowerCase().includes(searchName);
+      const matchesOperation = filterOperation === 'Todos' || item.operation === filterOperation;
+
+      if (!matchesName || !matchesOperation) return;
+
+      let icon = '❔';
+      if (item.operation === 'Entrada') icon = '📥';
+      else if (item.operation === 'Saída') icon = '📤';
+      else if (item.operation.includes('Editado')) icon = '✏️';
+      else if (item.operation.includes('Deletado')) icon = '❌';
+
       const li = document.createElement('li');
-      const icon = '📥';
+  
+      li.style.marginBottom = '10px';
+      li.style.padding = '8px';
+      li.style.borderRadius = '8px';
+
+      if (index === selectedItemIndex) {
+        li.style.border = "2px solid #4CAF50";
+        li.style.backgroundColor = "#d0ffd0";
+      }
 
       li.innerHTML = `
         ${icon} <strong>${item.operation}</strong> — ${item.name}<br>
         🗓️ ${item.date}<br>
         🔢 Quantidade: ${item.quantity}
       `;
+
+      if (!item.operation.includes("Deletado")) {
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "delete-btn";
+        deleteBtn.textContent = "❌";
+        deleteBtn.onclick = function (event) {
+          event.stopPropagation(); // Evita disparar o evento do li
+          deleteStock(index);
+        };
+        li.appendChild(deleteBtn);
+
+        const editBtn = document.createElement("button");
+        editBtn.className = "delete-btn";
+        editBtn.style.top = "15px";
+        editBtn.style.right = "9px";
+        editBtn.textContent = "";
+        editBtn.onclick = function (event) {
+          event.stopPropagation();
+          editStock(index);
+        };
+        li.appendChild(editBtn);
+      }
+
+      // Clique no item abre edição
+      li.onclick = function () {
+        editStock(index);
+      };
+
       list.appendChild(li);
+    });
+
+    // Atualiza campos se em edição
+    if (selectedItemIndex >= 0) {
+      const item = stockData[selectedItemIndex];
+      document.getElementById('item-name').value = item.name;
+      document.getElementById('quantity').value = item.quantity;
+      document.getElementById('operation-type').value = item.operation.replace(" (Editado)", "");
     }
-  });
-}
-
-
+  }
 
   function clearInputs() {
     document.getElementById('item-name').value = '';
     document.getElementById('quantity').value = '';
-    document.getElementById('operation-type').selectedIndex = 0;
+    document.getElementById('operation-type').value = 'Entrada';
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     updateStockList();
+    document.getElementById('search-name').addEventListener('input', updateStockList);
+    document.getElementById('filter-operation').addEventListener('change', updateStockList);
   });
 </script>
+
+
+
+
 
 </footer>
 
