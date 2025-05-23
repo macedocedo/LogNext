@@ -251,6 +251,38 @@ function formatCurrency(value) {
   value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
   return 'R$ ' + value;
 }
+const valorInput = document.getElementById('valor');
+
+valorInput.addEventListener('input', (e) => {
+  // Salva o cursor para tentar manter a posição após formatar
+  let cursorPosition = valorInput.selectionStart;
+  let originalLength = valorInput.value.length;
+
+  // Remove tudo que não seja número
+  let value = valorInput.value.replace(/\D/g, '');
+
+  // Se estiver vazio, limpa o campo
+  if (value.length === 0) {
+    valorInput.value = '';
+    return;
+  }
+
+  // Formata o valor como moeda
+  value = (parseInt(value) / 100).toFixed(2);
+
+  // Troca ponto por vírgula para moeda BR
+  value = value.replace('.', ',');
+
+  // Insere os milhares
+  value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  valorInput.value = 'R$ ' + value;
+
+  // Ajusta a posição do cursor para não pular no meio da digitação
+  let newLength = valorInput.value.length;
+  cursorPosition = cursorPosition + (newLength - originalLength);
+  valorInput.setSelectionRange(cursorPosition, cursorPosition);
+});
 
 function saveStock() {
   const name = document.getElementById('item-name').value.trim();
