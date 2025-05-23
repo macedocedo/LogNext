@@ -1,249 +1,294 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!--=============== FAVICON ===============-->
-  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
 
-  <!--=============== BOXICONS ===============-->
-  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
 
-  <!--=============== SWIPER CSS ===============--> 
-  <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
+    <!--=============== SWIPER CSS ===============--> 
+    <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
 
-  <!--=============== CSS ===============-->
-  <link rel="stylesheet" href="./css/styles1.css" />
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="./css/styles1.css" />
 
-  <title>AppLogNext</title>
+    <title>AppLogNext</title>
 
-  <style>
-    /* Estilos para a rolagem horizontal */
-    .horizontal-scroll-container {
-      display: flex;
-      overflow-x: auto;  /* Permite rolar horizontalmente */
-      gap: 20px;  /* Espaço entre os itens */
-      padding: 20px;
-      scroll-snap-type: x mandatory;  /* Efeito de "snap" */
-      width: 100vw;
-      height: 88vh;
-    }
+<style>
+  /* === Container de Rolagem Horizontal === */
+  .horizontal-scroll-container {
+    display: flex;
+    overflow-x: auto; /* Permite rolagem horizontal */
+    gap: 20px; /* Espaçamento entre os itens */
+    padding: 20px;
+    scroll-snap-type: x mandatory; /* Efeito de encaixe suave */
+    width: 100vw;
+    height: 88vh;
+  }
 
-    .horizontal-scroll-container::-webkit-scrollbar {
-      height: 8px;
-    }
+  /* Oculta barra de rolagem (Webkit) */
+  .horizontal-scroll-container::-webkit-scrollbar {
+    height: 8px;
+  }
 
-    .horizontal-scroll-container::-webkit-scrollbar-thumb {
-      background-color: #ffffff00;
-      border-radius: 10px;
-    }
+  .horizontal-scroll-container::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+  }
 
-    .grid-item {
-      background-color: rgba(0, 0, 0, 0);
-      border-radius: 8px;
-      width: 92vw;
-      max-width: 400px;
-      height: 80vh;
-      text-align: center;
-      scroll-snap-align: start;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  /* === Itens da Grade na Rolagem === */
+  .grid-item {
+    background-color: transparent;
+    border-radius: 8px;
+    width: 92vw;
+    max-width: 400px;
+    height: 80vh;
+    text-align: center;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .grid-item img {
-      width: 100%;
-      height: 45%;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
+  .grid-item img {
+    width: 100%;
+    height: 45%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
 
-    .grid-item h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
+  .grid-item h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
 
-    .grid-item p {
-      font-size: 18px;
-      color: #000000;
-      max-width: 90%;
-      text-align: center;
-    }
+  .grid-item p {
+    font-size: 18px;
+    color: #000;
+    max-width: 90%;
+    text-align: center;
+  }
 
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 500px;
-      margin: auto;
-    }
+  /* === Estilo Global === */
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+  }
 
-    label {
-      display: block;
-      margin-top: 12px;
-      font-size: 16px;
-      font-weight: bold;
-    }
+  /* === Formulários === */
+  label {
+    display: block;
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: bold;
+  }
 
-    select,
-    input[type="number"],
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: 1px solid #000000;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
+  select,
+  input[type="number"],
+  input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 12px 0;
+    border-radius: 8px;
+    border: 1px solid #000;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
 
-    button {
-      width: 100%;
-      background-color: #949694;
-      color: rgb(0, 0, 0);
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+  button {
+    width: 100%;
+    background-color: #949694;
+    color: #000;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
 
-    button:hover {
-      background-color: #45a049;
-    }
+  button:hover {
+    background-color: #45a049;
+  }
 
-    .saved-data {
-      margin-top: 30px;
-    }
+  /* === Área de Dados Salvos === */
+  .saved-data {
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
 
-    .saved-data h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
+  ul#data-list {
+    max-height: 290px;
+    overflow-y: auto;
+    padding-right: 10px;
+    list-style: none;
+    padding: 0;
+  }
 
-    ul#data-list {
-      list-style: none;
-      padding: 0;
-    }
+  /* Barra de rolagem personalizada */
+  ul#data-list::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    ul#data-list li {
-      background: #828585;
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      position: relative;
-      font-size: 16px;
-    }
+  ul#data-list::-webkit-scrollbar-thumb {
+    background-color: rgba(248, 248, 248, 0.53);
+    border-radius: 3px;
+  }
 
-    .action-btns {
-      margin-top: 10px;
-      display: flex;
-      gap: 10px;
-    }
+  ul#data-list::-webkit-scrollbar-track {
+    background-color: #e1e1e1;
+  }
 
-    .action-btns button {
-      flex: 1;
-      font-size: 14px;
-      padding: 8px;
-    }
+  .saved-data h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
 
-    .delete-btn {
-      background-color: #e53835;
-      color: #000;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+  ul#data-list li {
+    background: #828585;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    position: relative;
+    font-size: 16px;
+  }
 
-    .edit-btn {
-      background-color: #45a049;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+  /* === Botões de Ação === */
+  .action-btns {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
 
-    .selected-item {
-      background-color: #a8e6a3 !important;
-      border: 2px solid #3b873e;
-    }
+  .action-btns button {
+    flex: 1;
+    font-size: 14px;
+    padding: 8px;
+  }
 
-    .stock-balloon {
-      position: relative;
-      display: inline-block;
-      background-color: #f8f8f8;
-      padding: 5px 10px;
-      border-radius: 15px;
-      margin-left: 10px;
-      font-size: 14px;
-      color: #333;
-      border: 1px solid #ddd;
-    }
+  .delete-btn {
+    background-color: #e53835;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
-    .stock-balloon-zero {
-      background-color: #ffcccc;
-      color: #d8000c;
-      border: 1px solid #d8000c;
-      font-weight: bold;
-    }
+  .edit-btn {
+    background-color: #45a049;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
-    .stock-balloon:after {
-      content: '';
-      position: absolute;
-      left: -10px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border: 5px solid transparent;
-      border-right-color: #f8f8f8;
-    }
+  /* Item Selecionado */
+  .selected-item {
+    background-color: #a8e6a3 !important;
+    border: 2px solid #3b873e;
+  }
 
-    .stock-balloon-zero:after {
-      border-right-color: #ffcccc;
-    }
-  </style>
-</head>
-<body>
-  <!--==================== HEADER ====================-->
-  <header class="header" id="header">
-    <nav class="nav container">
-      <a href="index.html" class="nav__logo">
-        <img src="assets/img/favicon.png" alt="" class="nav__logo-img" />
-        LogNext
-      </a>
+  /* === Balão de Estoque === */
+  .stock-balloon {
+    position: relative;
+    display: inline-block;
+    background-color: #f8f8f8;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ddd;
+  }
 
-      <div class="nav__menu" id="nav-menu">
-        <ul class="nav__list">
-          <li class="nav__item"><a href="index.html" class="nav__link active-link">Início</a></li>
-          <li class="nav__item"><a href="Lista.html" class="nav__link">Lista</a></li>
-          <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
-          <li class="nav__item"><a href="Filtro.html" class="nav__link">Calculo</a></li>
-        </ul>
+  .stock-balloon-zero {
+    background-color: #ffcccc;
+    color: #d8000c;
+    border: 1px solid #d8000c;
+    font-weight: bold;
+  }
 
-        <div class="nav__close" id="nav-close">
-          <i class="bx bx-x"></i>
+  .stock-balloon:after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-right-color: #f8f8f8;
+  }
+
+  .stock-balloon-zero:after {
+    border-right-color: #ffcccc;
+  }
+</style>
+
+  </head>
+  <body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/img/favicon.png" alt="" class="nav__logo-img" />
+          LogNext
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item"><a href="index.html" class="nav__link active-link">Início</a></li>
+            <li class="nav__item"><a href="Lista.html" class="nav__link">Lista</a></li>
+            <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
+            <li class="nav__item"><a href="Filtro.html" class="nav__link">Calculo</a></li>
+          </ul>
+
+          <div class="nav__close" id="nav-close">
+            <i class="bx bx-x"></i>
+          </div>
+
+          <img src="assets/img/nav-light.png" alt="" class="nav__img" />
         </div>
-
-        <img src="assets/img/nav-light.png" alt="" class="nav__img" />
-      </div>
-      <div class="nav__btns">
-        <!-- Theme change button -->
-        <i class="bx bx-moon change-theme" id="theme-button"></i>
-        <!-- Toggle button -->
-        <div class="nav__toggle" id="nav-toggle">
-          <i class="bx bx-grid-alt"></i>
+        <div class="nav__btns">
+          <!-- Theme change button -->
+          <i class="bx bx-moon change-theme" id="theme-button"></i>
+          <!-- Toggle button -->
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="bx bx-grid-alt"></i>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
 
-  <!--==================== CONTEÚDO ====================-->
-  <h1>Estoque - Saida</h1>
+     <h1>Estoque - Saída</h1>
+
+  <!-- Histórico de Movimentações -->
+  <div class="saved-data">
+    <h2>Buscar item</h2>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="🔎Buscar"
+      oninput="filterStockList()"
+    />
+    <ul id="data-list"></ul>
+  </div>
+
+  <!-- Formulário para Saída -->
+
+
+    <!--==================== FORMULÁRIO ABAIXO ====================-->
+  <br>
+    <h2>Movimentação</h2>
 
   <label for="item-name">Código do Produto:</label>
   <input type="text" id="item-name" placeholder="Item" required />
@@ -261,273 +306,269 @@
     pattern="[0-9]*" 
     oninput="this.value = this.value.replace(/[^0-9]/g, '')"
   />
+
   <label for="notes">Observações:</label>
   <input type="text" id="notes" placeholder="Observações" />
 
-<select id="operation-type" required disabled>
-  <option value="Saida" selected>Saída</option>
-</select>
-
-
+  <label for="operation-type">Operação:</label>
+  <input type="text" id="operation-type" value="Saida" readonly style="background-color: #d3d3d3; color: #000;">
 
   <div style="display: flex; gap: 10px;">
     <button id="save-btn" onclick="saveStock()">Saída</button>
     <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
   </div>
+  
+  <script>
+    let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
+    let currentStock = JSON.parse(localStorage.getItem("estoqueAtual")) || {};
+    let editIndex = -1;
 
-  <div class="saved-data">
-    <h2>Histórico de Movimentações</h2>
-    <input
-      type="text"
-      id="search-input"
-      placeholder="Buscar por nome ou observações..."
-      oninput="filterStockList()"
-    />
-    <ul id="data-list"></ul>
-  </div>
-
-<script>
-  let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
-  let currentStock = JSON.parse(localStorage.getItem("estoqueAtual")) || {};
-  let editIndex = -1;
-
-  function formatCurrency(value) {
-    value = value.replace(/\D/g, "");
-    value = (parseFloat(value) / 100).toFixed(2) + "";
-    value = value.replace(".", ",");
-    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-    return "R$ " + value;
-  }
-
-function saveStock() {
-  const name = document.getElementById('item-name').value.trim();
-  const quantity = parseInt(document.getElementById('quantity').value);
-  let valorInput = document.getElementById('valor').value;
-  const notes = document.getElementById('notes').value;
-  const operation = document.getElementById('operation-type').value;
-  const date = new Date().toLocaleString();
-
-  if (!name || !quantity || quantity < 1 || !valorInput) {
-    alert('Preencha todos os campos obrigatórios corretamente! A quantidade mínima é 1.');
-    return;
-  }
-
-  // 🔁 RECONSTRUI O ESTOQUE ATUAL DO ITEM BASEADO NO HISTÓRICO
-  let currentQuantity = 0;
-  stockData.forEach(entry => {
-    if (entry.name === name) {
-      if (entry.operation === "Entrada") {
-        currentQuantity += entry.quantity;
-      } else if (entry.operation === "Saida") {
-        currentQuantity -= entry.quantity;
-      }
+    function formatCurrency(value) {
+      value = value.replace(/\D/g, "");
+      value = (parseFloat(value) / 100).toFixed(2) + "";
+      value = value.replace(".", ",");
+      value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+      return "R$ " + value;
     }
-  });
 
-  if (operation === "Saida") {
-    if (currentQuantity < quantity) {
-      alert(`Estoque insuficiente para saída de ${quantity} unidades de "${name}". Estoque atual: ${currentQuantity}.`);
+  function saveStock() {
+    const name = document.getElementById('item-name').value.trim();
+    const quantity = parseInt(document.getElementById('quantity').value);
+    let valorInput = document.getElementById('valor').value;
+    const notes = document.getElementById('notes').value;
+    const operation = document.getElementById('operation-type').value;
+    const date = new Date().toLocaleString();
+
+    if (!name || !quantity || quantity < 1 || !valorInput) {
+      alert('Preencha todos os campos obrigatórios corretamente! A quantidade mínima é 1.');
       return;
     }
-    currentQuantity -= quantity;
-  } else if (operation === "Entrada") {
-    currentQuantity += quantity;
-  }
 
-  const valor = formatCurrency(valorInput);
-  const entry = { name, quantity, valor, notes, operation, date };
-  stockData.push(entry);
+    // 🔁 RECONSTRUI O ESTOQUE ATUAL DO ITEM BASEADO NO HISTÓRICO
+    let currentQuantity = 0;
+    stockData.forEach(entry => {
+      if (entry.name === name) {
+        if (entry.operation === "Entrada") {
+          currentQuantity += entry.quantity;
+        } else if (entry.operation === "Saida") {
+          currentQuantity -= entry.quantity;
+        }
+      }
+    });
 
-  // Atualiza estoque salvo
-  currentStock[name] = currentQuantity;
-
-  localStorage.setItem("estoqueData", JSON.stringify(stockData));
-  localStorage.setItem("estoqueAtual", JSON.stringify(currentStock));
-  updateStockList();
-  clearInputs();
-}
-
-const valorInput = document.getElementById('valor');
-
-valorInput.addEventListener('input', (e) => {
-  // Salva o cursor para tentar manter a posição após formatar
-  let cursorPosition = valorInput.selectionStart;
-  let originalLength = valorInput.value.length;
-
-  // Remove tudo que não seja número
-  let value = valorInput.value.replace(/\D/g, '');
-
-  // Se estiver vazio, limpa o campo
-  if (value.length === 0) {
-    valorInput.value = '';
-    return;
-  }
-
-  // Formata o valor como moeda
-  value = (parseInt(value) / 100).toFixed(2);
-
-  // Troca ponto por vírgula para moeda BR
-  value = value.replace('.', ',');
-
-  // Insere os milhares
-  value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-  valorInput.value = 'R$ ' + value;
-
-  // Ajusta a posição do cursor para não pular no meio da digitação
-  let newLength = valorInput.value.length;
-  cursorPosition = cursorPosition + (newLength - originalLength);
-  valorInput.setSelectionRange(cursorPosition, cursorPosition);
-});
-
-
-function editStock(index) {
-  const item = stockData[index];
-
-  // Sempre redefina a quantidade para 1 ao selecionar um item
-  document.getElementById("quantity").value = "1";
-
-  document.getElementById("item-name").value = item.name;
-  document.getElementById("valor").value = item.valor.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
-  document.getElementById("notes").value = item.notes || "";
-
-  editIndex = index;
-  document.getElementById("save-btn").textContent = "Salvar Alterações";
-  document.getElementById("cancel-btn").style.display = "inline-block";
-}
-
-
-
-  function cancelEdit() {
-    editIndex = -1;
-    clearInputs();
-    document.getElementById("save-btn").textContent = "Adicionar";
-    document.getElementById("cancel-btn").style.display = "none";
-  }
-
-  function deleteStock(index) {
-    if (confirm("Deseja excluir este item?")) {
-      stockData.splice(index, 1);
-      localStorage.setItem("estoqueData", JSON.stringify(stockData));
-      updateStockList();
+    if (operation === "Saida") {
+      if (currentQuantity < quantity) {
+        alert(`Estoque insuficiente para saída de ${quantity} unidades de "${name}". Estoque atual: ${currentQuantity}.`);
+        return;
+      }
+      currentQuantity -= quantity;
+    } else if (operation === "Entrada") {
+      currentQuantity += quantity;
     }
-  }
 
-  function clearInputs() {
-    document.getElementById("item-name").value = "";
-    document.getElementById("quantity").value = "1"; // Define valor padrão como 1
-    document.getElementById("valor").value = "";
-    document.getElementById("notes").value = "";
-    document.getElementById("operation-type").selectedIndex = 0;
-  }
+    const valor = formatCurrency(valorInput);
+    const entry = { name, quantity, valor, notes, operation, date };
+    stockData.push(entry);
 
-  function updateStockList() {
-    filterStockList();
-    updateStockSummary();
-  }
+    // Atualiza estoque salvo
+    currentStock[name] = currentQuantity;
 
-  function filterStockList() {
-    const searchTerm = document.getElementById("search-input").value.toLowerCase();
-    const list = document.getElementById("data-list");
-    list.innerHTML = "";
-
-    stockData.forEach((item, index) => {
-      const name = item.name.toLowerCase();
-      const notes = (item.notes || "").toLowerCase();
-
-      if (name.includes(searchTerm) || notes.includes(searchTerm)) {
-        const li = document.createElement("li");
-        const icon = item.operation === 'Saida' ? "📤" : "📥";
-        
-        // Calcula o estoque atual para este item
-        let currentStockForItem = 0;
-        const allItemsForProduct = stockData.filter(i => i.name === item.name);
-
-        allItemsForProduct.forEach(i => {
-        if (i.operation === 'Entrada') {
-        currentStockForItem += i.quantity;
-        } else {
-        currentStockForItem -= i.quantity;
-      }
-
-        });
-        
-        // Garante que o estoque não seja negativo
-        currentStockForItem = Math.max(0, currentStockForItem);
-        
-        // Determina a classe do balão com base no estoque
-        const balloonClass = currentStockForItem === 0 ? "stock-balloon stock-balloon-zero" : "stock-balloon";
-        
-        const stockBalloon = `<span class="${balloonClass}">Estoque: ${currentStockForItem}</span>`;
-        
-        li.innerHTML = `
-          ${icon} <strong>${item.operation}</strong> — ${item.name} ${stockBalloon}<br>
-          🗓️ ${item.date}<br>
-          🔢 Quantidade: ${item.quantity}<br>
-          💰 Valor: ${item.valor}<br>
-          📝 ${item.notes || "Sem observações"}
-          <div class="action-btns">
-            <button class="delete-btn" onclick="deleteStock(${index})">Excluir</button>
-          </div>
-        `;
-
-        li.addEventListener("click", () => {
-          editStock(index);
-          highlightSelected(li);
-        });
-
-        list.appendChild(li);
-      }
-    });
-  }
-
-  function updateStockSummary() {
-    const summaryList = document.getElementById("stock-summary");
-    if (!summaryList) return;
-
-    summaryList.innerHTML = "";
-    Object.keys(currentStock).forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = `${item}: ${currentStock[item]} unidades`;
-      summaryList.appendChild(li);
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
+    localStorage.setItem("estoqueData", JSON.stringify(stockData));
+    localStorage.setItem("estoqueAtual", JSON.stringify(currentStock));
     updateStockList();
-  });
-
-  function highlightSelected(selectedElement) {
-    const listItems = document.querySelectorAll("#data-list li");
-    listItems.forEach(li => li.classList.remove("selected-item"));
-    selectedElement.classList.add("selected-item");
+    clearInputs();
   }
 
-  // Formatação automática do campo de valor
-  document.getElementById('valor').addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    value = (value / 100).toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    });
-    e.target.value = value;
-  });
+  const valorInput = document.getElementById('valor');
 
-  // Garante que a quantidade mínima seja 1
-  document.getElementById('quantity').addEventListener('change', function(e) {
-    if (this.value < 1) {
-      this.value = 1;
+  valorInput.addEventListener('input', (e) => {
+    // Salva o cursor para tentar manter a posição após formatar
+    let cursorPosition = valorInput.selectionStart;
+    let originalLength = valorInput.value.length;
+
+    // Remove tudo que não seja número
+    let value = valorInput.value.replace(/\D/g, '');
+
+    // Se estiver vazio, limpa o campo
+    if (value.length === 0) {
+      valorInput.value = '';
+      return;
     }
+
+    // Formata o valor como moeda
+    value = (parseInt(value) / 100).toFixed(2);
+
+    // Troca ponto por vírgula para moeda BR
+    value = value.replace('.', ',');
+
+    // Insere os milhares
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    valorInput.value = 'R$ ' + value;
+
+    // Ajusta a posição do cursor para não pular no meio da digitação
+    let newLength = valorInput.value.length;
+    cursorPosition = cursorPosition + (newLength - originalLength);
+    valorInput.setSelectionRange(cursorPosition, cursorPosition);
   });
-</script>
 
-  <!--=============== SCROLL REVEAL ===============-->
-  <script src="./js/scrollreveal.min.js"></script>
 
-  <!--=============== SWIPER JS ===============-->
-  <script src="./js/swiper-bundle.min.js"></script>
+    function editStock(index) {
+      const item = stockData[index];
 
-  <!--=============== MAIN JS ===============-->
-  <script src="./js/main.js"></script>
-</body>
-</html>
+      document.getElementById("item-name").value = item.name;
+
+      // Verifica se o estoque está zerado
+      if (item.quantity === 0) {
+        document.getElementById("quantity").value = "0";
+      } else {
+        document.getElementById("quantity").value = "1";
+      }
+
+      document.getElementById("valor").value = item.valor;
+      document.getElementById("notes").value = item.notes || "";
+
+      editIndex = index;
+      document.getElementById("save-btn").textContent = "Salvar Alterações";
+      document.getElementById("cancel-btn").style.display = "inline-block";
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+
+
+    function cancelEdit() {
+      editIndex = -1;
+      clearInputs();
+      document.getElementById("save-btn").textContent = "Adicionar";
+      document.getElementById("cancel-btn").style.display = "none";
+    }
+
+    function deleteStock(index) {
+      if (confirm("Deseja excluir este item?")) {
+        stockData.splice(index, 1);
+        localStorage.setItem("estoqueData", JSON.stringify(stockData));
+        updateStockList();
+      }
+    }
+
+function clearInputs() {
+  document.getElementById("item-name").value = "";
+  document.getElementById("quantity").value = "1"; // Define valor padrão como 1
+  document.getElementById("valor").value = "";
+  document.getElementById("notes").value = "";
+  document.getElementById("operation-type").selectedIndex = 0;
+}
+
+
+    function updateStockList() {
+      filterStockList();
+      updateStockSummary();
+    }
+
+    function filterStockList() {
+      const searchTerm = document.getElementById("search-input").value.toLowerCase();
+      const list = document.getElementById("data-list");
+      list.innerHTML = "";
+
+      stockData.forEach((item, index) => {
+        const name = item.name.toLowerCase();
+        const notes = (item.notes || "").toLowerCase();
+
+        if (name.includes(searchTerm) || notes.includes(searchTerm)) {
+          const li = document.createElement("li");
+          const icon = item.operation === 'Saida' ? "📤" : "📥";
+          
+          // Calcula o estoque atual para este item
+          let currentStockForItem = 0;
+          const allItemsForProduct = stockData.filter(i => i.name === item.name);
+
+          allItemsForProduct.forEach(i => {
+          if (i.operation === 'Entrada') {
+          currentStockForItem += i.quantity;
+          } else {
+          currentStockForItem -= i.quantity;
+        }
+
+          });
+          
+          // Garante que o estoque não seja negativo
+          currentStockForItem = Math.max(0, currentStockForItem);
+          
+          // Determina a classe do balão com base no estoque
+          const balloonClass = currentStockForItem === 0 ? "stock-balloon stock-balloon-zero" : "stock-balloon";
+          
+          const stockBalloon = `<span class="${balloonClass}">Estoque: ${currentStockForItem}</span>`;
+          
+          li.innerHTML = `
+            ${icon} <strong>${item.operation}</strong> — ${item.name} ${stockBalloon}<br>
+            🗓️ ${item.date}<br>
+            🔢 Quantidade: ${item.quantity}<br>
+            💰 Valor: ${item.valor}<br>
+            📝 ${item.notes || "Sem observações"}
+            <div class="action-btns">
+            </div>
+          `;
+
+          li.addEventListener("click", () => {
+            editStock(index);
+            highlightSelected(li);
+          });
+
+          list.appendChild(li);
+        }
+      });
+    }
+
+    function updateStockSummary() {
+      const summaryList = document.getElementById("stock-summary");
+      if (!summaryList) return;
+
+      summaryList.innerHTML = "";
+      Object.keys(currentStock).forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item}: ${currentStock[item]} unidades`;
+        summaryList.appendChild(li);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      updateStockList();
+    });
+
+    function highlightSelected(selectedElement) {
+      const listItems = document.querySelectorAll("#data-list li");
+      listItems.forEach(li => li.classList.remove("selected-item"));
+      selectedElement.classList.add("selected-item");
+    }
+
+    // Formatação automática do campo de valor
+    document.getElementById('valor').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      value = (value / 100).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+      e.target.value = value;
+    });
+
+    // Garante que a quantidade mínima seja 1
+    document.getElementById('quantity').addEventListener('change', function(e) {
+      if (this.value < 1) {
+        this.value = 1;
+      }
+    });
+  </script>
+
+    <!--=============== SCROLL REVEAL ===============-->
+    <script src="./js/scrollreveal.min.js"></script>
+
+    <!--=============== SWIPER JS ===============-->
+    <script src="./js/swiper-bundle.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="./js/main.js"></script>
+  </body>
+  </html>
