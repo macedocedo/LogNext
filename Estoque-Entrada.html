@@ -1,128 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-
-    <!--=============== BOXICONS ===============-->
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-
-    <!--=============== SWIPER CSS ===============--> 
-    <link rel="stylesheet" href="./css/swiper-bundle.min.css">
-
-    <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="./css/styles1.css">
-
-    <title>AppLogNext</title>
-
- <style>
-        /* Estilos para a rolagem horizontal */
-        .horizontal-scroll-container {
-            display: flex;
-            overflow-x: auto;  /* Permite rolar horizontalmente */
-            gap: 20px;  /* Espaço entre os itens */
-            padding: 20px;
-            scroll-snap-type: x mandatory;  /* Permite um "efeito de clique" suave quando rolar */
-            width: 100vw;  /* Preenche toda a largura da tela */
-            height: 88vh;  /* Preenche toda a altura da tela */
-        }
-
-        .horizontal-scroll-container::-webkit-scrollbar {
-            height: 8px; /* Tamanho da barra de rolagem */
-        }
-
-        .horizontal-scroll-container::-webkit-scrollbar-thumb {
-            background-color: #ffffff00;  /* Cor da barra de rolagem */
-            border-radius: 10px;
-        }
-
-        .grid-item {
-            background-color: rgba(0, 0, 0, 0);
-            border-radius: 8px;
-            width: 92vw;  /* Largura maior para ocupar mais espaço */
-            max-width: 400px;  /* Largura máxima para não ficar muito grande */
-            height: 80vh;  /* Altura maior para usar mais da tela */
-            text-align: center;
-            scroll-snap-align: start;  /* Alinha o item quando for rolado */
-            flex-shrink: 0;  /* Impede que os itens encolham */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .grid-item img {
-            width: 100%;
-            height: 45%;
-            object-fit: cover;  /* Garante que a imagem cubra a área do item */
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .grid-item h2 {
-            font-size: 32px;  /* Tamanho maior para o título */
-            margin-bottom: 10px;
-        }
-
-        .grid-item p {
-            font-size: 18px;  /* Tamanho maior para o texto */
-            color: #000000;
-            max-width: 90%;  /* Limita a largura do texto */
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!--==================== HEADER ====================-->
-
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="index.html" class="nav__logo">
-                <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
-                LogNext
-            </a>
-
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                <li class="nav__item"><a href="index.html" class="nav__link active-link">Inicio</a></li>
-                <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
-                <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
-                <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
-                </ul>
-
-                <div class="nav__close" id="nav-close">
-                    <i class='bx bx-x' ></i>
-                </div>
-
-                <img src="assets/img/nav-light.png" alt="" class="nav__img">
-            </div>
-            <div class="nav__btns">
-
-                <!-- Theme change button -->
-
-                <i class='bx bx-moon change-theme' id="theme-button"></i>
-
-                <!-- Toggle button -->
-
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-grid-alt' ></i>
-                </div>
-            </div>
-
-        </nav>
-    </header>
-
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LogNext</title>
+
+  <!--=============== FAVICON ===============-->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+  <!--=============== BOXICONS ===============-->
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+  <!--=============== SWIPER CSS ===============--> 
+  <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+
+  <!--=============== CSS ===============-->
+  <link rel="stylesheet" href="./css/styles1.css">
+
+  <title>AppLogNext</title>
+
   <style>
+    /* Estilos para a rolagem horizontal */
+    .horizontal-scroll-container {
+      display: flex;
+      overflow-x: auto;  /* Permite rolar horizontalmente */
+      gap: 20px;  /* Espaço entre os itens */
+      padding: 20px;
+      scroll-snap-type: x mandatory;  /* Efeito de "snap" */
+      width: 100vw;
+      height: 88vh;
+    }
+
+    .horizontal-scroll-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .horizontal-scroll-container::-webkit-scrollbar-thumb {
+      background-color: #ffffff00;
+      border-radius: 10px;
+    }
+
+    .grid-item {
+      background-color: rgba(0, 0, 0, 0);
+      border-radius: 8px;
+      width: 92vw;
+      max-width: 400px;
+      height: 80vh;
+      text-align: center;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 45%;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .grid-item h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .grid-item p {
+      font-size: 18px;
+      color: #000000;
+      max-width: 90%;
+      text-align: center;
+    }
+
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -182,37 +133,83 @@
       padding: 12px;
       margin-bottom: 10px;
       border-radius: 8px;
-      display: flow-root;
-      flex-direction: row;
-      gap: 6px;
       position: relative;
       font-size: 16px;
     }
 
+    .action-btns {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btns button {
+      flex: 1;
+      font-size: 14px;
+      padding: 8px;
+    }
+    
     .delete-btn {
-      position: absolute;
-      top: -23px;
-      right: 9px;
-      background-color: #e5383500;
-      color: rgb(0, 0, 0);
+      background-color: #e53835;
+      color: #000;
       border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 16px;
-      line-height: 32px;
-      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .edit-btn {
+      background-color: #45a049;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
       cursor: pointer;
     }
 
-    .delete-btn:hover {
-      background-color: #c6282800;
-    }
+li.selected {
+  background-color: #a4d4ae;
+  border: 2px solid #45a049;
+  cursor: pointer;
+}
+
 
   </style>
 </head>
 <body>
 
+  <!--==================== HEADER ====================-->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
+        LogNext
+      </a>
+
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link active-link">Início</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
+          <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
+        </ul>
+
+        <div class="nav__close" id="nav-close">
+          <i class='bx bx-x'></i>
+        </div>
+
+        <img src="assets/img/nav-light.png" alt="" class="nav__img">
+      </div>
+      <div class="nav__btns">
+        <!-- Theme change button -->
+        <i class='bx bx-moon change-theme' id="theme-button"></i>
+        <!-- Toggle button -->
+        <div class="nav__toggle" id="nav-toggle">
+          <i class='bx bx-grid-alt'></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!--==================== CONTEÚDO ====================-->
   <h1>Controle de Estoque</h1>
 
   <label for="item-name">Nome do Produto:</label>
@@ -221,133 +218,169 @@
   <label for="quantity">Quantidade:</label>
   <input type="number" id="quantity" placeholder="Quantidade" required>
 
+  <label for="valor">Valor:</label>
+  <input type="text" id="valor" placeholder="R$ 0,00" required>
+
+  <label for="notes">Observações:</label>
+  <input type="text" id="notes" placeholder="Observações">
+
   <label for="operation-type">Operação:</label>
   <select id="operation-type" required>
     <option value="Entrada">Entrada</option>
   </select>
 
-<div style="display: flex; gap: 10px;">
-  <button id="save-btn" onclick="saveStock()">Adicionar</button>
-  <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
-</div>
-
+  <div style="display: flex; gap: 10px;">
+    <button id="save-btn" onclick="saveStock()">Entrada</button>
+    <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
+  </div>
 
   <div class="saved-data">
     <h2>Histórico de Movimentações</h2>
     <ul id="data-list"></ul>
   </div>
 
-<script>
-  let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
-  let editIndex = -1;
+  <script>
+   let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
+let editIndex = -1;
+let selectedIndex = -1; // índice do item selecionado
 
-  function saveStock() {
-    const name = document.getElementById('item-name').value;
-    const quantity = parseInt(document.getElementById('quantity').value);
-    const operation = document.getElementById('operation-type').value;
-    const date = new Date().toLocaleString();
-
-    if (!name || !quantity || !operation) {
-      alert('Preencha todos os campos!');
-      return;
-    }
-
-    if (editIndex === -1) {
-      // Modo adicionar: cria novo item
-      const entry = { name, quantity, operation, date };
-      stockData.push(entry);
-    } else {
-      // Modo editar: atualiza item existente
-      stockData[editIndex] = { name, quantity, operation, date };
-      editIndex = -1;
-      document.getElementById('save-btn').textContent = 'Adicionar';
-      document.getElementById('cancel-btn').style.display = 'none';
-    }
-
-    localStorage.setItem("estoqueData", JSON.stringify(stockData));
-    updateStockList();
-    clearInputs();
-  }
-
-  function deleteStock(index) {
-    const confirmDelete = confirm("Tem certeza que deseja deletar este item?");
-    if (!confirmDelete) return;
-
-    stockData.splice(index, 1);
-    localStorage.setItem("estoqueData", JSON.stringify(stockData));
-    updateStockList();
-
-    // Se estava editando o item deletado, cancela edição
-    if (editIndex === index) {
-      cancelEdit();
-    }
-  }
-
-function editStock(index) {
-  const item = stockData[index];
-  document.getElementById('item-name').value = item.name;
-  document.getElementById('quantity').value = item.quantity;
-
-  // Garante que o valor do select continue "Entrada"
-  document.getElementById('operation-type').value = "Entrada";
-
-  editIndex = index;
-  document.getElementById('save-btn').textContent = 'Salvar Alterações';
-  document.getElementById('cancel-btn').style.display = 'inline-block';
+function formatCurrency(value) {
+  value = value.replace(/\D/g, '');
+  value = (parseFloat(value) / 100).toFixed(2) + '';
+  value = value.replace(".", ",");
+  value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  return 'R$ ' + value;
 }
 
+function saveStock() {
+  const name = document.getElementById('item-name').value.trim();
+  const quantity = parseInt(document.getElementById('quantity').value);
+  let valorInput = document.getElementById('valor').value;
+  const notes = document.getElementById('notes').value;
+  const operation = document.getElementById('operation-type').value;
+  const date = new Date().toLocaleString();
 
+  if (!name || !quantity || !valorInput || !operation) {
+    alert('Preencha todos os campos obrigatórios!');
+    return;
+  }
 
-  function cancelEdit() {
-    clearInputs();
+  const valor = formatCurrency(valorInput);
+
+  const lastEntry = [...stockData].reverse().find(item => item.name === name);
+
+  if (lastEntry && lastEntry.operation === operation && editIndex === -1) {
+    alert(`O produto "${name}" já teve uma "${operation}". Registre a operação oposta.`);
+    return;
+  }
+
+  const entry = { name, quantity, valor, notes, operation, date };
+
+  if (editIndex === -1) {
+    stockData.push(entry);
+  } else {
+    stockData[editIndex] = entry;
     editIndex = -1;
+    selectedIndex = -1;
     document.getElementById('save-btn').textContent = 'Adicionar';
     document.getElementById('cancel-btn').style.display = 'none';
   }
+
+  localStorage.setItem("estoqueData", JSON.stringify(stockData));
+  updateStockList();
+  clearInputs();
+}
+
+function loadStockToForm(index) {
+  const item = stockData[index];
+  document.getElementById('item-name').value = item.name;
+  document.getElementById('quantity').value = item.quantity;
+  // Para o campo valor, converte "R$ 1.234,56" para "1234.56" (formato numérico para edição)
+  let valorParaEditar = item.valor.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
+  document.getElementById('valor').value = valorParaEditar;
+  document.getElementById('notes').value = item.notes || '';
+  document.getElementById('operation-type').value = item.operation;
+
+  editIndex = index;
+  selectedIndex = index;
+  document.getElementById('save-btn').textContent = 'Salvar Alterações';
+  document.getElementById('cancel-btn').style.display = 'inline-block';
+
+  updateStockList();
+}
+
+
+function cancelEdit() {
+  editIndex = -1;
+  selectedIndex = -1;
+  clearInputs();
+  document.getElementById('save-btn').textContent = 'Adicionar';
+  document.getElementById('cancel-btn').style.display = 'none';
+  updateStockList();
+}
+
+function deleteStock(index) {
+  if (confirm('Deseja excluir este item?')) {
+    stockData.splice(index, 1);
+    localStorage.setItem("estoqueData", JSON.stringify(stockData));
+    selectedIndex = -1; // remover seleção ao excluir
+    if (editIndex === index) {
+      cancelEdit();
+    } else {
+      updateStockList();
+    }
+  }
+}
+
+function clearInputs() {
+  document.getElementById('item-name').value = '';
+  document.getElementById('quantity').value = '';
+  document.getElementById('valor').value = '';
+  document.getElementById('notes').value = '';
+  document.getElementById('operation-type').selectedIndex = 0;
+}
 
 function updateStockList() {
   const list = document.getElementById('data-list');
   list.innerHTML = '';
 
-  // Mostra só os itens de "Entrada"
   stockData.forEach((item, index) => {
-    if (item.operation === 'Entrada') {
+    if (item.operation === 'Entrada' || item.operation === 'Saída') {
       const li = document.createElement('li');
-      const icon = '📥';
+      li.className = (index === selectedIndex) ? 'selected' : '';
+      // Quando clicar no item, carrega os dados para editar
+      li.onclick = () => loadStockToForm(index);
 
+      const icon = '📥';
       li.innerHTML = `
         ${icon} <strong>${item.operation}</strong> — ${item.name}<br>
         🗓️ ${item.date}<br>
-        🔢 Quantidade: ${item.quantity}
+        🔢 Quantidade: ${item.quantity}<br>
+        💰 Valor: ${item.valor}<br>
+        📝 ${item.notes || 'Sem observações'}
+        <div class="action-btns">
+          <button class="edit-btn" onclick="event.stopPropagation(); loadStockToForm(${index})">Editar</button>
+          <button class="delete-btn" onclick="event.stopPropagation(); deleteStock(${index})">Excluir</button>
+        </div>
       `;
       list.appendChild(li);
     }
   });
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  updateStockList();
+});
 
+  </script>
 
-  function clearInputs() {
-    document.getElementById('item-name').value = '';
-    document.getElementById('quantity').value = '';
-    document.getElementById('operation-type').selectedIndex = 0;
-  }
+  <!--=============== SCROLL REVEAL ===============-->
+  <script src="./js/scrollreveal.min.js"></script>
 
-  document.addEventListener("DOMContentLoaded", function () {
-    updateStockList();
-  });
-</script>
+  <!--=============== SWIPER JS ===============-->
+  <script src="./js/swiper-bundle.min.js"></script>
 
-</footer>
-
-    <!--=============== SCROLL REVEAL ===============-->
-    <script src="./js/scrollreveal.min.js"></script>
-
-    <!--=============== SWIPER JS ===============-->
-    <script src="./js/swiper-bundle.min.js"></script>
-
-    <!--=============== MAIN JS ===============-->
-    <script src="./js/main.js"></script>
+  <!--=============== MAIN JS ===============-->
+  <script src="./js/main.js"></script>
 </body>
 </html>
-

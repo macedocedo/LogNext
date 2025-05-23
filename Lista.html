@@ -2,8 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Controle de Estoque - LogNext</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!--=============== FAVICON ===============-->
   <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
@@ -11,53 +10,116 @@
   <!--=============== BOXICONS ===============-->
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
 
-  <!--=============== SWIPER CSS ===============-->
+  <!--=============== SWIPER CSS ===============--> 
   <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
 
-  <!--=============== NAVIGATION STYLE ===============-->
+  <!--=============== CSS ===============-->
   <link rel="stylesheet" href="./css/styles1.css" />
 
+  <title>AppLogNext</title>
+
   <style>
+    .horizontal-scroll-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 20px;
+      scroll-snap-type: x mandatory;
+      width: 100vw;
+      height: 88vh;
+    }
+
+    .horizontal-scroll-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .horizontal-scroll-container::-webkit-scrollbar-thumb {
+      background-color: #ffffff00;
+      border-radius: 10px;
+    }
+
+    .grid-item {
+      background-color: rgba(0, 0, 0, 0);
+      border-radius: 8px;
+      width: 92vw;
+      max-width: 400px;
+      height: 80vh;
+      text-align: center;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 45%;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .grid-item h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .grid-item p {
+      font-size: 18px;
+      color: #000000;
+      max-width: 90%;
+      text-align: center;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 90px auto 20px; /* margem maior para nav */
-      padding: 0 10px;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
     }
 
-    /* Restante do estilo da página */
     label {
       display: block;
-      margin-top: 15px;
-      font-weight: bold;
+      margin-top: 12px;
       font-size: 16px;
+      font-weight: bold;
     }
 
-    input, select, button {
+    select,
+    input[type="number"],
+    input[type="text"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 5px;
+      margin-bottom: 12px;
       border-radius: 8px;
-      border: 1px solid #000;
+      border: 1px solid #000000;
       font-size: 16px;
       box-sizing: border-box;
     }
 
     button {
+      width: 100%;
       background-color: #949694;
-      color: black;
+      color: rgb(0, 0, 0);
       border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      margin-top: 15px;
     }
 
     button:hover {
       background-color: #45a049;
-      color: white;
     }
 
     .saved-data {
-      margin-top: 30px;
+      margin: 0 auto;
+      max-width: 850px;
+      padding: 20px;
+      text-align: center;
     }
 
     .saved-data h2 {
@@ -65,237 +127,263 @@
       margin-bottom: 10px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
+    ul#data-list {
+      list-style: none;
+      padding: 0;
     }
 
-    table, th, td {
-      border: 1px solid #000;
+    ul#data-list li {
+      background: #828585;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      position: relative;
+      font-size: 16px;
+    }
+
+    .action-btns {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btns button {
+      flex: 1;
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .delete-btn {
+      background-color: #e53835;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #45a049;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+
+    /* Tema claro (padrão) */
+    :root {
+      --table-bg: #ffffff;
+      --table-text: #000000;
+      --table-border: #cccccc;
+      --table-header-bg: #eaeaea;
+    }
+
+    /* Tema escuro */
+    body.dark-theme {
+      --table-bg: #1e1e1e;
+      --table-text: #ffffff;
+      --table-border: #444;
+      --table-header-bg: #333;
+    }
+
+
+    table {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-size: 15px;
+      background-color: var(--table-bg);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      color: var(--table-text);
     }
 
     th, td {
       padding: 10px;
-      text-align: left;
-      font-size: 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--table-border);
     }
 
     th {
-      background-color: #f2f2f2;
+      background-color: var(--table-header-bg);
+      font-weight: bold;
     }
 
-    .delete-btn {
-      background-color: transparent;
-      color: red;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
+    td button {
+      margin-right: 5px;
+      padding: 5px 10px;
+      font-size: 14px;
     }
 
-    .delete-btn:hover {
-      color: darkred;
-    }
-
-    #download-btn {
-      margin-top: 10px;
-      background-color: #007bff;
-      color: white;
-    }
-
-    #download-btn:hover {
-      background-color: #0056b3;
-    }
-
+    /* RESPONSIVO - modo "cards" para tabela no mobile */
     @media (max-width: 600px) {
-      body {
-        margin: 10px;
-        padding: 0 10px;
-        max-width: 100%;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-        text-align: center;
-      }
-
-      label {
-        font-size: 14px;
-        margin-top: 12px;
-      }
-
-      input, select, button {
-        font-size: 14px;
-        padding: 8px;
-      }
-
-      .saved-data h2 {
-        font-size: 18px;
-        text-align: center;
-      }
-
-      table, th, td {
-        font-size: 14px;
-      }
-
-      table {
+      table, thead, tbody, th, td, tr {
         display: block;
-        overflow-x: auto;
+      }
+
+      thead tr {
+        display: none; /* esconde cabeçalho */
+      }
+
+      tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--table-border);
+        border-radius: 8px;
+        padding: 10px;
+        background: var(--table-bg);
+      }
+
+      tbody td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid var(--table-border);
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
+      tbody td::before {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 45%;
         white-space: nowrap;
+        font-weight: bold;
+        content: attr(data-label);
       }
 
-      #download-btn {
-        font-size: 14px;
-        padding: 8px;
-        width: 100%;
-        margin-bottom: 10px;
-      }
-
-      .delete-btn {
-        font-size: 16px;
-        padding: 2px 6px;
+      tbody td:last-child {
+        border-bottom: 0;
       }
     }
 
-    /* ======== ESTILO TABELA PARA MUDANÇA DE TEMA ======== */
-    body.dark-theme table {
-      background-color: #1e1e1e;
-      color: white;
-    }
-
-    body.dark-theme th {
-      background-color: #333;
-      color: #fff;
-    }
-
-    body.dark-theme td {
-      border-color: #555;
-    }
-
-    body:not(.dark-theme) table {
-      background-color: white;
-      color: black;
-    }
-
-    body:not(.dark-theme) th {
-      background-color: #f2f2f2;
-      color: black;
-    }
-
-    body:not(.dark-theme) td {
-      border-color: #000;
-    }
   </style>
 </head>
-
 <body>
-
-  <!--==================== NAV FUNCIONAL ====================-->
+  <!--==================== HEADER ====================-->
   <header class="header" id="header">
     <nav class="nav container">
       <a href="index.html" class="nav__logo">
-        <img src="assets/img/favicon.png" alt="Logo" class="nav__logo-img"> 
+        <img src="assets/img/favicon.png" alt="" class="nav__logo-img" />
         LogNext
       </a>
 
       <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
-          <li class="nav__item"><a href="index.html" class="nav__link active-link">Inicio</a></li>
+          <li class="nav__item"><a href="index.html" class="nav__link active-link">Início</a></li>
           <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
-          <li class="nav__item"><a href="Estoque-Saida.html" class="nav__link">Saída</a></li>
           <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
         </ul>
-
-        <div class="nav__close" id="nav-close"><i class='bx bx-x'></i></div>
-        <img src="assets/img/nav-light.png" alt="" class="nav__img">
+        <div class="nav__close" id="nav-close">
+          <i class="bx bx-x"></i>
+        </div>
+        <img src="assets/img/nav-light.png" alt="" class="nav__img" />
       </div>
 
       <div class="nav__btns">
-        <i class='bx bx-moon change-theme' id="theme-button"></i>
-        <div class="nav__toggle" id="nav-toggle"><i class='bx bx-grid-alt'></i></div>
+        <i class="bx bx-moon change-theme" id="theme-button"></i>
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-grid-alt"></i>
+        </div>
       </div>
     </nav>
   </header>
 
-  <!--==================== CONTEÚDO PRINCIPAL ====================-->
+  <h1>Controle de Estoque</h1>
+
   <div class="saved-data">
     <h2>Histórico de Movimentações</h2>
-    <button id="download-btn" onclick="downloadExcel()">📥 Baixar Excel</button>
-    <table id="data-table" aria-label="Tabela de registros do estoque">
+
+    <label for="operation-filter">Filtrar por tipo:</label>
+    <select id="operation-filter" onchange="filterStockList()">
+      <option value="Todos">Todos</option>
+      <option value="Entrada">Entrada</option>
+      <option value="Saida">Saída</option>
+    </select>
+
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Buscar por nome ou observações..."
+      oninput="filterStockList()"
+    />
+
+    <button onclick="exportToExcel()">Exportar para Excel</button>
+
+    <table id="data-table">
       <thead>
         <tr>
-          <th>Operação</th>
-          <th>Nome do Produto</th>
-          <th>Quantidade</th>
+          <th>Tipo</th>
+          <th>Nome</th>
           <th>Data</th>
+          <th>Quantidade</th>
+          <th>Valor</th>
+          <th>Observações</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
   </div>
 
-  <!--==================== SCRIPTS ====================-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
   <script>
     let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
+    let editIndex = -1;
 
-    function updateStockList() {
-      const tbody = document.querySelector('#data-table tbody');
-      tbody.innerHTML = '';
+    function formatCurrency(value) {
+      value = value.replace(/\D/g, "");
+      value = (parseFloat(value) / 100).toFixed(2) + "";
+      value = value.replace(".", ",");
+      value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+      return "R$ " + value;
+    }
+
+    function exportToExcel() {
+      const table = document.getElementById("data-table");
+      const wb = XLSX.utils.table_to_book(table, { sheet: "Estoque" });
+      XLSX.writeFile(wb, "controle_estoque.xlsx");
+    }
+
+    function filterStockList() {
+      const searchTerm = document.getElementById("search-input").value.toLowerCase();
+      const operationFilter = document.getElementById("operation-filter").value;
+      const tbody = document.querySelector("#data-table tbody");
+      tbody.innerHTML = "";
 
       stockData.forEach((item, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${item.operation}</td>
-          <td>${item.name}</td>
-          <td>${item.quantity}</td>
-          <td>${item.date}</td>
-        `;
-        tbody.appendChild(tr);
+        const name = item.name.toLowerCase();
+        const notes = (item.notes || "").toLowerCase();
+        const matchesSearch = name.includes(searchTerm) || notes.includes(searchTerm);
+        const matchesOperation = operationFilter === "Todos" || item.operation === operationFilter;
+
+        if (matchesSearch && matchesOperation) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td data-label="Tipo">${item.operation}</td>
+            <td data-label="Nome">${item.name}</td>
+            <td data-label="Data">${item.date}</td>
+            <td data-label="Quantidade">${item.quantity}</td>
+            <td data-label="Valor">${item.valor}</td>
+            <td data-label="Observações">${item.notes || "Sem observações"}</td>
+          `;
+          tbody.appendChild(tr);
+        }
       });
     }
 
-    function downloadExcel() {
-      if (stockData.length === 0) {
-        alert('Nenhum dado para exportar.');
-        return;
-      }
-
-      const headers = ['Operação', 'Nome do Produto', 'Quantidade', 'Data'];
-      const csvRows = [headers.join(';')];
-
-      stockData.forEach(item => {
-        const row = [
-          item.operation,
-          `"${item.name.replace(/"/g, '""')}"`,
-          item.quantity,
-          item.date
-        ];
-        csvRows.push(row.join(';'));
-      });
-
-      const csvString = csvRows.join('\n');
-      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'controle_estoque.csv';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    document.addEventListener("DOMContentLoaded", updateStockList);
+    document.addEventListener("DOMContentLoaded", function () {
+      filterStockList();
+    });
   </script>
 
-  <!--=============== SCROLL REVEAL ===============-->
   <script src="./js/scrollreveal.min.js"></script>
-
-  <!--=============== SWIPER JS ===============-->
   <script src="./js/swiper-bundle.min.js"></script>
-
-  <!--=============== MAIN JS (para navegação) ===============-->
   <script src="./js/main.js"></script>
 </body>
 </html>

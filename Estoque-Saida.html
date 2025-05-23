@@ -1,128 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+  <!--=============== FAVICON ===============-->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
 
-    <!--=============== BOXICONS ===============-->
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <!--=============== BOXICONS ===============-->
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
 
-    <!--=============== SWIPER CSS ===============--> 
-    <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+  <!--=============== SWIPER CSS ===============--> 
+  <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
 
-    <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="./css/styles1.css">
+  <!--=============== CSS ===============-->
+  <link rel="stylesheet" href="./css/styles1.css" />
 
-    <title>AppLogNext</title>
+  <title>AppLogNext</title>
 
- <style>
-        /* Estilos para a rolagem horizontal */
-        .horizontal-scroll-container {
-            display: flex;
-            overflow-x: auto;  /* Permite rolar horizontalmente */
-            gap: 20px;  /* Espaço entre os itens */
-            padding: 20px;
-            scroll-snap-type: x mandatory;  /* Permite um "efeito de clique" suave quando rolar */
-            width: 100vw;  /* Preenche toda a largura da tela */
-            height: 88vh;  /* Preenche toda a altura da tela */
-        }
-
-        .horizontal-scroll-container::-webkit-scrollbar {
-            height: 8px; /* Tamanho da barra de rolagem */
-        }
-
-        .horizontal-scroll-container::-webkit-scrollbar-thumb {
-            background-color: #ffffff00;  /* Cor da barra de rolagem */
-            border-radius: 10px;
-        }
-
-        .grid-item {
-            background-color: rgba(0, 0, 0, 0);
-            border-radius: 8px;
-            width: 92vw;  /* Largura maior para ocupar mais espaço */
-            max-width: 400px;  /* Largura máxima para não ficar muito grande */
-            height: 80vh;  /* Altura maior para usar mais da tela */
-            text-align: center;
-            scroll-snap-align: start;  /* Alinha o item quando for rolado */
-            flex-shrink: 0;  /* Impede que os itens encolham */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .grid-item img {
-            width: 100%;
-            height: 45%;
-            object-fit: cover;  /* Garante que a imagem cubra a área do item */
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .grid-item h2 {
-            font-size: 32px;  /* Tamanho maior para o título */
-            margin-bottom: 10px;
-        }
-
-        .grid-item p {
-            font-size: 18px;  /* Tamanho maior para o texto */
-            color: #000000;
-            max-width: 90%;  /* Limita a largura do texto */
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!--==================== HEADER ====================-->
-
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="index.html" class="nav__logo">
-                <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
-                LogNext
-            </a>
-
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                <li class="nav__item"><a href="index.html" class="nav__link active-link">Inicio</a></li>
-                <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
-                <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
-                <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
-                </ul>
-
-                <div class="nav__close" id="nav-close">
-                    <i class='bx bx-x' ></i>
-                </div>
-
-                <img src="assets/img/nav-light.png" alt="" class="nav__img">
-            </div>
-            <div class="nav__btns">
-
-                <!-- Theme change button -->
-
-                <i class='bx bx-moon change-theme' id="theme-button"></i>
-
-                <!-- Toggle button -->
-
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-grid-alt' ></i>
-                </div>
-            </div>
-
-        </nav>
-    </header>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LogNext</title>
-  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <style>
+    /* Estilos para a rolagem horizontal */
+    .horizontal-scroll-container {
+      display: flex;
+      overflow-x: auto;  /* Permite rolar horizontalmente */
+      gap: 20px;  /* Espaço entre os itens */
+      padding: 20px;
+      scroll-snap-type: x mandatory;  /* Efeito de "snap" */
+      width: 100vw;
+      height: 88vh;
+    }
+
+    .horizontal-scroll-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .horizontal-scroll-container::-webkit-scrollbar-thumb {
+      background-color: #ffffff00;
+      border-radius: 10px;
+    }
+
+    .grid-item {
+      background-color: rgba(0, 0, 0, 0);
+      border-radius: 8px;
+      width: 92vw;
+      max-width: 400px;
+      height: 80vh;
+      text-align: center;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 45%;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .grid-item h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .grid-item p {
+      font-size: 18px;
+      color: #000000;
+      max-width: 90%;
+      text-align: center;
+    }
+
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -137,7 +88,9 @@
       font-weight: bold;
     }
 
-    select, input[type="number"], input[type="text"] {
+    select,
+    input[type="number"],
+    input[type="text"] {
       width: 100%;
       padding: 12px;
       margin-top: 5px;
@@ -182,255 +135,361 @@
       padding: 12px;
       margin-bottom: 10px;
       border-radius: 8px;
-      display: flow-root;
-      flex-direction: row;
-      gap: 6px;
       position: relative;
       font-size: 16px;
     }
 
+    .action-btns {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btns button {
+      flex: 1;
+      font-size: 14px;
+      padding: 8px;
+    }
+
     .delete-btn {
-      position: absolute;
-      top: -23px;
-      right: 9px;
-      background-color: #e5383500;
-      color: rgb(0, 0, 0);
+      background-color: #e53835;
+      color: #000;
       border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 16px;
-      line-height: 32px;
-      text-align: center;
+      border-radius: 4px;
       cursor: pointer;
     }
 
-    .delete-btn:hover {
-      background-color: #c6282800;
+    .edit-btn {
+      background-color: #45a049;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
 
+    .selected-item {
+      background-color: #a8e6a3 !important;
+      border: 2px solid #3b873e;
+    }
+
+    .stock-balloon {
+      position: relative;
+      display: inline-block;
+      background-color: #f8f8f8;
+      padding: 5px 10px;
+      border-radius: 15px;
+      margin-left: 10px;
+      font-size: 14px;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .stock-balloon-zero {
+      background-color: #ffcccc;
+      color: #d8000c;
+      border: 1px solid #d8000c;
+      font-weight: bold;
+    }
+
+    .stock-balloon:after {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-right-color: #f8f8f8;
+    }
+
+    .stock-balloon-zero:after {
+      border-right-color: #ffcccc;
+    }
   </style>
 </head>
 <body>
+  <!--==================== HEADER ====================-->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/img/favicon.png" alt="" class="nav__logo-img" />
+        LogNext
+      </a>
 
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link active-link">Início</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
+          <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
+        </ul>
+
+        <div class="nav__close" id="nav-close">
+          <i class="bx bx-x"></i>
+        </div>
+
+        <img src="assets/img/nav-light.png" alt="" class="nav__img" />
+      </div>
+      <div class="nav__btns">
+        <!-- Theme change button -->
+        <i class="bx bx-moon change-theme" id="theme-button"></i>
+        <!-- Toggle button -->
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-grid-alt"></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!--==================== CONTEÚDO ====================-->
   <h1>Controle de Estoque</h1>
 
   <label for="item-name">Nome do Produto:</label>
-  <input type="text" id="item-name" placeholder="Item" required>
+  <input type="text" id="item-name" placeholder="Item" required />
 
   <label for="quantity">Quantidade:</label>
-  <input type="number" id="quantity" placeholder="Quantidade" required>
+  <input type="number" id="quantity" placeholder="Quantidade" min="1" value="1" required />
 
-<label for="operation-type">Operação:</label>
-<select id="operation-type" required>
-  <option value="Entrada">Entrada</option>
-  <option value="Saída">Saída</option> <!-- ADICIONADO -->
+  <label for="valor">Valor:</label>
+  <input type="text" id="valor" placeholder="R$ 0,00" required />
+
+  <label for="notes">Observações:</label>
+  <input type="text" id="notes" placeholder="Observações" />
+
+<select id="operation-type" required disabled>
+  <option value="Saida" selected>Saída</option>
 </select>
 
 
-<div style="display: flex; gap: 10px;">
-  <button id="save-btn" onclick="saveStock()">Adicionar</button>
-  <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
-</div>
 
+  <div style="display: flex; gap: 10px;">
+    <button id="save-btn" onclick="saveStock()">Saída</button>
+    <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
+  </div>
 
-    <div class="saved-data">
-    <h2>Filtros</h2>
-
-    <label for="search-name">Buscar por nome:</label>
-    <input type="text" id="search-name" placeholder="Digite o nome do item">
-
-    <label for="filter-operation">Filtrar por operação:</label>
-    <select id="filter-operation">
-      <option value="Todos">Todos</option>
-      <option value="Entrada">Entrada</option>
-      <option value="Saída">Saída</option>
-      <option value="Saída (Editado)">Saída (Editado)</option>
-      <option value="Saída (Deletado)">Saída (Deletado)</option>
-    </select>
-
+  <div class="saved-data">
     <h2>Histórico de Movimentações</h2>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Buscar por nome ou observações..."
+      oninput="filterStockList()"
+    />
     <ul id="data-list"></ul>
   </div>
 
 <script>
   let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
-  let selectedItemIndex = -1;
+  let currentStock = JSON.parse(localStorage.getItem("estoqueAtual")) || {};
+  let editIndex = -1;
 
-  function saveStock() {
-    const name = document.getElementById('item-name').value;
-    const quantity = parseInt(document.getElementById('quantity').value);
-    let operation = document.getElementById('operation-type').value;
-    const date = new Date().toLocaleString();
+  function formatCurrency(value) {
+    value = value.replace(/\D/g, "");
+    value = (parseFloat(value) / 100).toFixed(2) + "";
+    value = value.replace(".", ",");
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    return "R$ " + value;
+  }
 
-    if (!name || isNaN(quantity)) {
-      alert('Preencha todos os campos!');
+function saveStock() {
+  const name = document.getElementById('item-name').value.trim();
+  const quantity = parseInt(document.getElementById('quantity').value);
+  let valorInput = document.getElementById('valor').value;
+  const notes = document.getElementById('notes').value;
+  const operation = document.getElementById('operation-type').value;
+  const date = new Date().toLocaleString();
+
+  if (!name || !quantity || quantity < 1 || !valorInput) {
+    alert('Preencha todos os campos obrigatórios corretamente! A quantidade mínima é 1.');
+    return;
+  }
+
+  // 🔁 RECONSTRUI O ESTOQUE ATUAL DO ITEM BASEADO NO HISTÓRICO
+  let currentQuantity = 0;
+  stockData.forEach(entry => {
+    if (entry.name === name) {
+      if (entry.operation === "Entrada") {
+        currentQuantity += entry.quantity;
+      } else if (entry.operation === "Saida") {
+        currentQuantity -= entry.quantity;
+      }
+    }
+  });
+
+  if (operation === "Saida") {
+    if (currentQuantity < quantity) {
+      alert(`Estoque insuficiente para saída de ${quantity} unidades de "${name}". Estoque atual: ${currentQuantity}.`);
       return;
     }
+    currentQuantity -= quantity;
+  } else if (operation === "Entrada") {
+    currentQuantity += quantity;
+  }
 
-    if (selectedItemIndex >= 0) {
-      if (!operation.includes("(Editado)")) {
-        operation += " (Editado)";
-      }
+  const valor = formatCurrency(valorInput);
+  const entry = { name, quantity, valor, notes, operation, date };
+  stockData.push(entry);
 
-      stockData[selectedItemIndex] = { name, quantity, operation, date };
-      localStorage.setItem("estoqueData", JSON.stringify(stockData));
-    } else {
-      const newEntry = { name, quantity, operation, date };
-      stockData.push(newEntry);
-      localStorage.setItem("estoqueData", JSON.stringify(stockData));
-    }
+  // Atualiza estoque salvo
+  currentStock[name] = currentQuantity;
 
-    selectedItemIndex = -1;
-    document.getElementById('save-btn').textContent = 'Adicionar';
-    document.getElementById('cancel-btn').style.display = 'none';
+  localStorage.setItem("estoqueData", JSON.stringify(stockData));
+  localStorage.setItem("estoqueAtual", JSON.stringify(currentStock));
+  updateStockList();
+  clearInputs();
+}
 
+
+
+
+function editStock(index) {
+  const item = stockData[index];
+
+  // Sempre redefina a quantidade para 1 ao selecionar um item
+  document.getElementById("quantity").value = "1";
+
+  document.getElementById("item-name").value = item.name;
+  document.getElementById("valor").value = item.valor.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
+  document.getElementById("notes").value = item.notes || "";
+
+  editIndex = index;
+  document.getElementById("save-btn").textContent = "Salvar Alterações";
+  document.getElementById("cancel-btn").style.display = "inline-block";
+}
+
+
+
+  function cancelEdit() {
+    editIndex = -1;
     clearInputs();
-    updateStockList();
+    document.getElementById("save-btn").textContent = "Adicionar";
+    document.getElementById("cancel-btn").style.display = "none";
   }
 
-  function editStock(index) {
-    const item = stockData[index];
-
-    // Impede edição de itens deletados
-    if (item.operation.includes("Deletado")) {
-      alert("Este item foi deletado e não pode ser editado.");
-      return;
-    }
-
-    document.getElementById('item-name').value = item.name;
-    document.getElementById('quantity').value = item.quantity;
-    document.getElementById('operation-type').value = item.operation.replace(" (Editado)", "");
-
-    selectedItemIndex = index;
-    document.getElementById('save-btn').textContent = 'Salvar Alterações';
-    document.getElementById('cancel-btn').style.display = 'inline-block';
-
-    updateStockList();
-  }
-
-  // Função para deletar item
   function deleteStock(index) {
-    if (confirm("Tem certeza que deseja deletar este item?")) {
-      // Marca o item como deletado, mantendo o histórico
-      stockData[index].operation = "Saída (Deletado)";
+    if (confirm("Deseja excluir este item?")) {
+      stockData.splice(index, 1);
       localStorage.setItem("estoqueData", JSON.stringify(stockData));
-
-      // Se o item deletado estiver em edição, cancela a edição
-      if (selectedItemIndex === index) {
-        selectedItemIndex = -1;
-        clearInputs();
-        document.getElementById('save-btn').textContent = 'Adicionar';
-        document.getElementById('cancel-btn').style.display = 'none';
-      }
-
       updateStockList();
     }
   }
 
-  function updateStockList() {
-    const list = document.getElementById('data-list');
-    const searchName = document.getElementById('search-name')?.value.toLowerCase() || '';
-    const filterOperation = document.getElementById('filter-operation')?.value || 'Todos';
-
-    list.innerHTML = '';
-
-    stockData.slice().reverse().forEach((item, reverseIndex) => {
-      const index = stockData.length - 1 - reverseIndex;
-      const matchesName = item.name.toLowerCase().includes(searchName);
-      const matchesOperation = filterOperation === 'Todos' || item.operation === filterOperation;
-
-      if (!matchesName || !matchesOperation) return;
-
-      let icon = '❔';
-      if (item.operation === 'Entrada') icon = '📥';
-      else if (item.operation === 'Saída') icon = '📤';
-      else if (item.operation.includes('Editado')) icon = '✏️';
-      else if (item.operation.includes('Deletado')) icon = '❌';
-
-      const li = document.createElement('li');
-  
-      li.style.marginBottom = '10px';
-      li.style.padding = '8px';
-      li.style.borderRadius = '8px';
-
-      if (index === selectedItemIndex) {
-        li.style.border = "2px solid #4CAF50";
-        li.style.backgroundColor = "#d0ffd0";
-      }
-
-      li.innerHTML = `
-        ${icon} <strong>${item.operation}</strong> — ${item.name}<br>
-        🗓️ ${item.date}<br>
-        🔢 Quantidade: ${item.quantity}
-      `;
-
-      if (!item.operation.includes("Deletado")) {
-        const deleteBtn = document.createElement("button");
-        deleteBtn.className = "delete-btn";
-        deleteBtn.textContent = "❌";
-        deleteBtn.onclick = function (event) {
-          event.stopPropagation(); // Evita disparar o evento do li
-          deleteStock(index);
-        };
-        li.appendChild(deleteBtn);
-
-        const editBtn = document.createElement("button");
-        editBtn.className = "delete-btn";
-        editBtn.style.top = "15px";
-        editBtn.style.right = "9px";
-        editBtn.textContent = "";
-        editBtn.onclick = function (event) {
-          event.stopPropagation();
-          editStock(index);
-        };
-        li.appendChild(editBtn);
-      }
-
-      // Clique no item abre edição
-      li.onclick = function () {
-        editStock(index);
-      };
-
-      list.appendChild(li);
-    });
-
-    // Atualiza campos se em edição
-    if (selectedItemIndex >= 0) {
-      const item = stockData[selectedItemIndex];
-      document.getElementById('item-name').value = item.name;
-      document.getElementById('quantity').value = item.quantity;
-      document.getElementById('operation-type').value = item.operation.replace(" (Editado)", "");
-    }
+  function clearInputs() {
+    document.getElementById("item-name").value = "";
+    document.getElementById("quantity").value = "1"; // Define valor padrão como 1
+    document.getElementById("valor").value = "";
+    document.getElementById("notes").value = "";
+    document.getElementById("operation-type").selectedIndex = 0;
   }
 
-  function clearInputs() {
-    document.getElementById('item-name').value = '';
-    document.getElementById('quantity').value = '';
-    document.getElementById('operation-type').value = 'Entrada';
+  function updateStockList() {
+    filterStockList();
+    updateStockSummary();
+  }
+
+  function filterStockList() {
+    const searchTerm = document.getElementById("search-input").value.toLowerCase();
+    const list = document.getElementById("data-list");
+    list.innerHTML = "";
+
+    stockData.forEach((item, index) => {
+      const name = item.name.toLowerCase();
+      const notes = (item.notes || "").toLowerCase();
+
+      if (name.includes(searchTerm) || notes.includes(searchTerm)) {
+        const li = document.createElement("li");
+        const icon = item.operation === 'Saida' ? "📤" : "📥";
+        
+        // Calcula o estoque atual para este item
+        let currentStockForItem = 0;
+        const allItemsForProduct = stockData.filter(i => i.name === item.name);
+
+        allItemsForProduct.forEach(i => {
+        if (i.operation === 'Entrada') {
+        currentStockForItem += i.quantity;
+        } else {
+        currentStockForItem -= i.quantity;
+      }
+
+        });
+        
+        // Garante que o estoque não seja negativo
+        currentStockForItem = Math.max(0, currentStockForItem);
+        
+        // Determina a classe do balão com base no estoque
+        const balloonClass = currentStockForItem === 0 ? "stock-balloon stock-balloon-zero" : "stock-balloon";
+        
+        const stockBalloon = `<span class="${balloonClass}">Estoque: ${currentStockForItem}</span>`;
+        
+        li.innerHTML = `
+          ${icon} <strong>${item.operation}</strong> — ${item.name} ${stockBalloon}<br>
+          🗓️ ${item.date}<br>
+          🔢 Quantidade: ${item.quantity}<br>
+          💰 Valor: ${item.valor}<br>
+          📝 ${item.notes || "Sem observações"}
+          <div class="action-btns">
+            <button class="delete-btn" onclick="deleteStock(${index})">Excluir</button>
+          </div>
+        `;
+
+        li.addEventListener("click", () => {
+          editStock(index);
+          highlightSelected(li);
+        });
+
+        list.appendChild(li);
+      }
+    });
+  }
+
+  function updateStockSummary() {
+    const summaryList = document.getElementById("stock-summary");
+    if (!summaryList) return;
+
+    summaryList.innerHTML = "";
+    Object.keys(currentStock).forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item}: ${currentStock[item]} unidades`;
+      summaryList.appendChild(li);
+    });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     updateStockList();
-    document.getElementById('search-name').addEventListener('input', updateStockList);
-    document.getElementById('filter-operation').addEventListener('change', updateStockList);
+  });
+
+  function highlightSelected(selectedElement) {
+    const listItems = document.querySelectorAll("#data-list li");
+    listItems.forEach(li => li.classList.remove("selected-item"));
+    selectedElement.classList.add("selected-item");
+  }
+
+  // Formatação automática do campo de valor
+  document.getElementById('valor').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = (value / 100).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+    e.target.value = value;
+  });
+
+  // Garante que a quantidade mínima seja 1
+  document.getElementById('quantity').addEventListener('change', function(e) {
+    if (this.value < 1) {
+      this.value = 1;
+    }
   });
 </script>
 
+  <!--=============== SCROLL REVEAL ===============-->
+  <script src="./js/scrollreveal.min.js"></script>
 
+  <!--=============== SWIPER JS ===============-->
+  <script src="./js/swiper-bundle.min.js"></script>
 
-
-
-</footer>
-
-    <!--=============== SCROLL REVEAL ===============-->
-    <script src="./js/scrollreveal.min.js"></script>
-
-    <!--=============== SWIPER JS ===============-->
-    <script src="./js/swiper-bundle.min.js"></script>
-
-    <!--=============== MAIN JS ===============-->
-    <script src="./js/main.js"></script>
+  <!--=============== MAIN JS ===============-->
+  <script src="./js/main.js"></script>
 </body>
 </html>
-
