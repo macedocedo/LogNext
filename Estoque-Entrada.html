@@ -187,9 +187,9 @@ li.selected {
       <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
           <li class="nav__item"><a href="index.html" class="nav__link active-link">Início</a></li>
-          <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
-          <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
-          <li class="nav__item"><a href="Filtro.html" class="nav__link">Filtro</a></li>
+          <li class="nav__item"><a href="Lista.html" class="nav__link">Lista</a></li>
+          <li class="nav__item"><a href="Estoque-Saida.html" class="nav__link">Saida</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Calculo</a></li>
         </ul>
 
         <div class="nav__close" id="nav-close">
@@ -210,7 +210,7 @@ li.selected {
   </header>
 
   <!--==================== CONTEÚDO ====================-->
-  <h1>Controle de Estoque</h1>
+  <h1>Estoque - Entrada</h1>
 
   <label for="item-name">Código do Produto:</label>
   <input type="text" id="item-name" placeholder="Item" required>
@@ -219,7 +219,16 @@ li.selected {
   <input type="number" id="quantity" placeholder="Quantidade" required>
 
   <label for="valor">Valor:</label>
-  <input type="text" id="valor" placeholder="R$ 0,00" required>
+  <input 
+    type="text" 
+    id="valor" 
+    placeholder="R$ 0,00" 
+    required 
+    inputmode="numeric" 
+    pattern="[0-9]*" 
+    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+  />
+
 
   <label for="notes">Observações:</label>
   <input type="text" id="notes" placeholder="Observações">

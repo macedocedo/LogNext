@@ -142,7 +142,7 @@ body.dark-theme {
 
 .dark-theme .scroll-header,
 .dark-theme .nav__menu {
-  box-shadow: 0 2px 4px hsla(0, 0%, 4%, .3);
+  box-shadow: 0 2px 4px hsla(0, 7%, 94%, 0.349);
 }
 
 
