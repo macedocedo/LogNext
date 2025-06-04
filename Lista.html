@@ -386,29 +386,31 @@
       tbody.innerHTML = "";
 
       stockData.forEach((item, index) => {
-        const name = item.name.toLowerCase();
-        (item.notes || "").toString().toLowerCase()
+        const name = String(item.name || "").toLowerCase();
+        const notes = String(item.notes || "").toLowerCase();
+
         const matchesSearch = name.includes(searchTerm) || notes.includes(searchTerm);
         const matchesOperation = operationFilter === "Todos" || item.operation === operationFilter;
 
         if (matchesSearch && matchesOperation) {
           const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td data-label="Tipo">${item.operation}</td>
-          <td data-label="Código">${item.name}</td>
-          <td data-label="Data">${item.date}</td>
-          <td data-label="Quantidade">${item.quantity}</td>
-          <td data-label="Valor">${item.valor}</td>
-          <td data-label="Observações">${item.notes || "Sem observações"}</td>
-          <td data-label="Ações">
-            <i class='bx bx-edit edit-icon' title="Editar" onclick="editarItem(${index})"></i>
-            <i class='bx bx-trash delete-icon' title="Excluir" onclick="excluirItem(${index})"></i>
-          </td>
-        `;
+          tr.innerHTML = `
+            <td data-label="Tipo">${item.operation}</td>
+            <td data-label="Código">${item.name}</td>
+            <td data-label="Data">${item.date}</td>
+            <td data-label="Quantidade">${item.quantity}</td>
+            <td data-label="Valor">${item.valor}</td>
+            <td data-label="Observações">${item.notes || "Sem observações"}</td>
+            <td data-label="Ações">
+              <i class='bx bx-edit edit-icon' title="Editar" onclick="editarItem(${index})"></i>
+              <i class='bx bx-trash delete-icon' title="Excluir" onclick="excluirItem(${index})"></i>
+            </td>
+          `;
           tbody.appendChild(tr);
         }
       });
     }
+
 
       function editarItem(index) {
         const item = stockData[index];
@@ -477,39 +479,47 @@
           const importedData = XLSX.utils.sheet_to_json(firstSheet);
 
           importedData.forEach(item => {
-  const tipo = String(item["Tipo"] || "").trim() || "Entrada";
-  const nome = String(item["Código"] || "").trim();
-  const quantidade = parseInt(item["Quantidade"] || 0);
+            const tipo = String(item["Tipo"] || "").trim() || "Entrada";
+            const nome = String(item["Código"] || "").trim();
+            const quantidade = parseInt(item["Quantidade"] || 0);
 
-  let data = item["Data"];
-  if (typeof data === "number") {
-    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
-    const convertedDate = new Date(excelEpoch.getTime() + data * 86400000);
-    data = convertedDate.toLocaleDateString("pt-BR");
-  } else if (!data) {
-    data = new Date().toLocaleDateString("pt-BR");
-  }
+            if (!nome || isNaN(quantidade)) return;
 
-  const valor = item["Valor"] || "R$ 0,00";
-  const obs = item["Observações"] || "";
+            let data = item["Data"];
+            if (typeof data === "number") {
+              const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+              const convertedDate = new Date(excelEpoch.getTime() + data * 86400000);
+              data = convertedDate.toLocaleDateString("pt-BR");
+            } else if (!data) {
+              data = new Date().toLocaleDateString("pt-BR");
+            }
 
-  if (!nome) return;
+            const valor = item["Valor"] || "R$ 0,00";
+            const obs = item["Observações"] || "";
 
-    const novoItem = {
-      operation: tipo,
-      name: nome,
-      date: data,
-      quantity: quantidade,
-      valor: String(valor),
-      notes: String(obs)
-    };
+            const novoItem = {
+              operation: tipo,
+              name: nome,
+              date: data,
+              quantity: quantidade,
+              valor: String(valor),
+              notes: String(obs)
+            };
 
-  if (tipo === "Entrada") {
-    adicionarOuAtualizarItem(novoItem);
-  }
-
-  stockData.push(novoItem);
-});
+            if (tipo === "Entrada") {
+            adicionarOuAtualizarItem(novoItem);
+            } else {
+              const itemExistente = stockData.find(item => 
+                item.name === novoItem.name && 
+                item.date === novoItem.date &&
+                item.quantity === novoItem.quantity &&
+                item.operation === novoItem.operation
+              );
+              if (!itemExistente) {
+                stockData.push(novoItem);
+              }
+            }
+          });
 
           localStorage.setItem("estoqueData", JSON.stringify(stockData));
           filterStockList();
