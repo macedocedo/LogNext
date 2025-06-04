@@ -446,55 +446,49 @@
      document.getElementById('operation-type').selectedIndex = 0;
    }
 
-   function updateStockList() {
-     const list = document.getElementById('data-list');
-     list.innerHTML = '';
+    function updateStockList() {
+      const list = document.getElementById('data-list');
+      list.innerHTML = '';
 
-     // Primeiro calculamos o estoque atual para cada item
-     const stockSummary = {};
-     stockData.forEach(item => {
-       if (!stockSummary[item.name]) {
-         stockSummary[item.name] = 0;
-       }
-       if (item.operation === 'Entrada') {
-         stockSummary[item.name] += item.quantity;
-       } else if (item.operation === 'Saida') {
-         stockSummary[item.name] -= item.quantity;
-       }
-     });
+      const stockSummary = {};
+      stockData.forEach(item => {
+        if (!stockSummary[item.name]) {
+          stockSummary[item.name] = 0;
+        }
+        if (item.operation === 'Entrada') {
+          stockSummary[item.name] += item.quantity;
+        } else if (item.operation === 'Saida') {
+          stockSummary[item.name] -= item.quantity;
+        }
+      });
 
-     stockData.forEach((item, index) => {
-       if (item.operation === 'Entrada' || item.operation === 'Saida') {
-         const li = document.createElement('li');
-         li.className = (index === selectedIndex) ? 'selected' : '';
-         // Quando clicar no item, carrega os dados para editar
-         li.onclick = () => loadStockToForm(index);
+      stockData.forEach((item, index) => {
+        if (item.operation === 'Entrada') { // <== Aqui foi ajustado
+          const li = document.createElement('li');
+          li.className = (index === selectedIndex) ? 'selected' : '';
+          li.onclick = () => loadStockToForm(index);
 
-         const icon = item.operation === 'Entrada' ? '📥' : '📤';
-         
-         // Obtém o estoque atual para este item
-         const currentStockForItem = Math.max(0, stockSummary[item.name] || 0);
-         
-         // Determina a classe do balão com base no estoque
-         const balloonClass = currentStockForItem === 0 ? "stock-balloon stock-balloon-zero" : "stock-balloon";
-         
-         const stockBalloon = `<span class="${balloonClass}">Estoque: ${currentStockForItem}</span>`;
-         
-         li.innerHTML = `
-           ${icon} <strong>${item.operation}</strong> — ${item.name} ${stockBalloon}<br>
-           🗓️ ${item.date}<br>
-           🔢 Quantidade: ${item.quantity}<br>
-           💰 Valor: ${item.valor}<br>
-           📝 ${item.notes || 'Sem observações'}
-           <div class="action-btns">
-             <button class="edit-btn" onclick="event.stopPropagation(); loadStockToForm(${index})">Editar</button>
-             <button class="delete-btn" onclick="event.stopPropagation(); deleteStock(${index})">Excluir</button>
-           </div>
-         `;
-         list.appendChild(li);
-       }
-     });
-   }
+          const icon = '📥';
+          const currentStockForItem = Math.max(0, stockSummary[item.name] || 0);
+          const balloonClass = currentStockForItem === 0 ? "stock-balloon stock-balloon-zero" : "stock-balloon";
+          const stockBalloon = `<span class="${balloonClass}">Estoque: ${currentStockForItem}</span>`;
+
+          li.innerHTML = `
+            ${icon} <strong>${item.operation}</strong> — ${item.name} ${stockBalloon}<br>
+            🗓️ ${item.date}<br>
+            🔢 Quantidade: ${item.quantity}<br>
+            💰 Valor: ${item.valor}<br>
+            📝 ${item.notes || 'Sem observações'}
+            <div class="action-btns">
+              <button class="edit-btn" onclick="event.stopPropagation(); loadStockToForm(${index})">Editar</button>
+              <button class="delete-btn" onclick="event.stopPropagation(); deleteStock(${index})">Excluir</button>
+            </div>
+          `;
+          list.appendChild(li);
+        }
+      });
+    }
+
 
    document.addEventListener("DOMContentLoaded", function () {
      updateStockList();

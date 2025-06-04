@@ -76,8 +76,8 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      max-width: 500px;
       margin: auto;
+      max-width: 1000px; /* mobile */
     }
 
     label {
@@ -190,7 +190,7 @@
     table {
       width: 100%;
       max-width: 800px;
-      margin: 20px auto;
+      margin: 20px auto; /* centraliza horizontalmente */
       border-collapse: collapse;
       font-size: 15px;
       background-color: var(--table-bg);
@@ -199,7 +199,7 @@
       overflow: hidden;
       color: var(--table-text);
     }
-
+    
     th, td {
       padding: 10px;
       text-align: center;
@@ -218,7 +218,7 @@
     }
 
     /* RESPONSIVO - modo "cards" para tabela no mobile */
-    @media (max-width: 600px) {
+    @media (max-width: 900px) {
       table, thead, tbody, th, td, tr {
         display: block;
       }
@@ -259,6 +259,27 @@
         border-bottom: 0;
       }
     }
+
+    .edit-icon,
+    .delete-icon {
+      font-size: 20px;
+      cursor: pointer;
+      margin: 0 5px;
+      padding: 4px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .edit-icon:hover {
+      background-color: #45a049;
+      color: #fff;
+    }
+
+    .delete-icon:hover {
+      background-color: #e53835;
+      color: #fff;
+    }
+
 
   </style>
 </head>
@@ -313,6 +334,13 @@
       oninput="filterStockList()"
     />
 
+
+        <div style="margin-top: 20px;">
+      <input type="file" id="import-file" accept=".xlsx, .xls" />
+      <button onclick="importFromExcel()">Importar Excel</button>
+    </div>
+
+
     <button onclick="exportToExcel()">Exportar para Excel</button>
 
     <table id="data-table">
@@ -365,22 +393,132 @@
 
         if (matchesSearch && matchesOperation) {
           const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td data-label="Tipo">${item.operation}</td>
-            <td data-label="Código">${item.name}</td>
-            <td data-label="Data">${item.date}</td>
-            <td data-label="Quantidade">${item.quantity}</td>
-            <td data-label="Valor">${item.valor}</td>
-            <td data-label="Observações">${item.notes || "Sem observações"}</td>
-          `;
+        tr.innerHTML = `
+          <td data-label="Tipo">${item.operation}</td>
+          <td data-label="Código">${item.name}</td>
+          <td data-label="Data">${item.date}</td>
+          <td data-label="Quantidade">${item.quantity}</td>
+          <td data-label="Valor">${item.valor}</td>
+          <td data-label="Observações">${item.notes || "Sem observações"}</td>
+          <td data-label="Ações">
+            <i class='bx bx-edit edit-icon' title="Editar" onclick="editarItem(${index})"></i>
+            <i class='bx bx-trash delete-icon' title="Excluir" onclick="excluirItem(${index})"></i>
+          </td>
+        `;
           tbody.appendChild(tr);
         }
       });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      filterStockList();
-    });
+      function editarItem(index) {
+        const item = stockData[index];
+        const novoNome = prompt("Código:", item.name);
+        const novaQtd = prompt("Quantidade:", item.quantity);
+        const novoValor = prompt("Valor:", item.valor);
+        const novasObs = prompt("Observações:", item.notes);
+
+        if (novoNome && novaQtd) {
+          stockData[index] = {
+            operation: item.operation, // mantém o tipo original
+            name: novoNome,
+            date: item.date,           // mantém a data original
+            quantity: parseInt(novaQtd),
+            valor: novoValor || item.valor,
+            notes: novasObs || ""
+          };
+          localStorage.setItem("estoqueData", JSON.stringify(stockData));
+          filterStockList();
+        }
+      }
+
+
+
+      function excluirItem(index) {
+        if (confirm("Tem certeza que deseja excluir este item?")) {
+          stockData.splice(index, 1);
+          localStorage.setItem("estoqueData", JSON.stringify(stockData));
+          filterStockList();
+        }
+      }
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+        filterStockList();
+      });
+
+            function adicionarOuAtualizarItem(novoItem) {
+          const indexExistente = stockData.findIndex(item => item.name === novoItem.name);
+
+          if (indexExistente !== -1) {
+            stockData[indexExistente].quantity =
+              parseInt(stockData[indexExistente].quantity) + parseInt(novoItem.quantity);
+          } else {
+            stockData.push(novoItem);
+          }
+
+          localStorage.setItem("estoqueData", JSON.stringify(stockData));
+          filterStockList();
+        }
+
+      function importFromExcel() {
+        const fileInput = document.getElementById("import-file");
+        const file = fileInput.files[0];
+
+        if (!file) {
+          alert("Selecione um arquivo para importar.");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: "array" });
+          const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+          const importedData = XLSX.utils.sheet_to_json(firstSheet);
+
+          importedData.forEach(item => {
+            const tipo = item["Tipo"]?.trim() || "Entrada";
+            const nome = item["Código"]?.trim() || "";
+            const quantidade = parseInt(item["Quantidade"] || 0);
+
+            let data = item["Data"];
+            if (typeof data === "number") {
+              const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+              const convertedDate = new Date(excelEpoch.getTime() + data * 86400000);
+              data = convertedDate.toLocaleDateString("pt-BR");
+            } else if (!data) {
+              data = new Date().toLocaleDateString("pt-BR");
+            }
+
+            const valor = item["Valor"] || "R$ 0,00";
+            const obs = item["Observações"] || "";
+
+            if (!nome) return;
+
+            const novoItem = {
+              operation: tipo,
+              name: nome,
+              date: data,
+              quantity: quantidade,
+              valor: valor,
+              notes: obs
+            };
+
+            if (tipo === "Entrada") {
+              adicionarOuAtualizarItem(novoItem);
+            }
+
+            stockData.push(novoItem);
+          });
+
+          localStorage.setItem("estoqueData", JSON.stringify(stockData));
+          filterStockList();
+          alert("Importação concluída!");
+        };
+
+        reader.readAsArrayBuffer(file);
+      }
+
   </script>
 
   <script src="./js/scrollreveal.min.js"></script>

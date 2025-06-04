@@ -1,148 +1,146 @@
 <!DOCTYPE html>
-    <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!--=============== FAVICON ===============-->
-        <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
 
-        <!--=============== BOXICONS ===============-->
-        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
 
-        <!--=============== SWIPER CSS ===============--> 
-        <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
 
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="./css/styles1.css">
+    <!--=============== CUSTOM CSS ===============-->
+    <link rel="stylesheet" href="./css/styles1.css" />
 
-        <title>LogNext</title>
-    </head>
-    <body>
 
-        <!--==================== HEADER ====================-->
 
-        <header class="header" id="header">
-            <nav class="nav container">
-                <a href="#" class="nav__logo">
-                    <img src="assets/img/favicon.png" alt="" class="nav__logo-img"> 
-                    LogNext
-                </a>
+<style>
 
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <a href="" class="nav__link active-link"></a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="Lista.html" class="nav__link">Lista</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="Filtro.html" class="nav__link">Cálculo</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="Estoque-Saida.html" class="nav__link">Estoque-Saida</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="Estoque-Entrada.html" class="nav__link">Estoque-Entrada</a>
-                        </li>                                                
-                    </ul>
+            /* Centralizar vertical e horizontalmente a main container no desktop */
+        @media screen and (min-width: 768px) {
+        .home,
+        .celebrate {
+            display: flex;
+            justify-content: center; /* centraliza horizontalmente */
+            align-items: center;     /* centraliza verticalmente */
+            min-height: 38vh;        /* altura mínima para centralizar verticalmente */
+        }
 
-                    <div class="nav__close" id="nav-close">
-                        <i class='bx bx-x' ></i>
-                    </div>
+        .home__buttons {
+        display: flex;
+        justify-content: center; /* centraliza horizontalmente */
+        gap: 1rem; /* espaço entre os botões */
+        margin-top: 1.5rem; /* um espaçamento de cima */
+        }
 
-                    <img src="assets/img/nav-light.png" alt="" class="nav__img">
+        /* Garantir que o container interno tenha uma largura limitada */
+        .home__container,
+        .celebrate__container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* Ajuste para grid para flex */
+        .home__container.grid,
+        .celebrate__container.grid {
+            display: block; /* para que o flex funcione sem conflito */
+        }
+
+        }
+</style>
+
+    <title>LogNext</title>
+</head>
+
+<body>
+
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">
+                <img src="assets/img/favicon.png" alt="" class="nav__logo-img" />
+                LogNext
+            </a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="" class="nav__link active-link"></a></li>
+                    <li class="nav__item"><a href="Lista.html" class="nav__link">Lista</a></li>
+                    <li class="nav__item"><a href="Filtro.html" class="nav__link">Cálculo</a></li>
+                    <li class="nav__item"><a href="Estoque-Saida.html" class="nav__link">Estoque-Saida</a></li>
+                    <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Estoque-Entrada</a></li>
+                </ul>
+
+                <div class="nav__close" id="nav-close">
+                    <i class='bx bx-x'></i>
                 </div>
-                <div class="nav__btns">
 
-                    <!-- Theme change button -->
+                <img src="assets/img/nav-light.png" alt="" class="nav__img" />
+            </div>
 
-                    <i class='bx bx-moon change-theme' id="theme-button"></i>
-
-                    <!-- Toggle button -->
-
-                    <div class="nav__toggle" id="nav-toggle">
-                        <i class='bx bx-grid-alt' ></i>
-                    </div>
+            <div class="nav__btns">
+                <i class='bx bx-moon change-theme' id="theme-button"></i>
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-grid-alt'></i>
                 </div>
+            </div>
+        </nav>
+    </header>
 
-            </nav>
-        </header>
+    <!--==================== MAIN ====================-->
+    <main class="main">
 
-        <!--==================== MAIN ====================-->
-
-        <main class="main">
-
-            <!--==================== HOME ====================-->
-
-            <section class="home" id="home">
-                <div class="home__container container grid">
-
-
-                    <div class="home__data">
-                        <h1 class="home__title"> LogNext </h1>
-                        <p class="home__description">
-                            Aplicativo desenvolvido para auxiliar no Controle logistico, oferecendo uma gestão detalhadas sobre a execução dos processos logistico
-                        </p>
-                        
-                        <a href="Estoque-Saida.html" class="button">Saida</a>
+        <!--==================== HOME ====================-->
+        <section class="home" id="home">
+            <div class="home__container container grid">
+                <div class="home__data">
+                    <h1 class="home__title">LogNext</h1>
+                    <p class="home__description">
+                        Aplicativo desenvolvido para auxiliar no controle logístico, oferecendo uma gestão detalhada da execução dos processos.
+                    </p>
+                    <div class="home__buttons">
+                        <a href="Estoque-Saida.html" class="button">Saída</a>
                         <a href="Estoque-Entrada.html" class="button">Entrada</a>
                     </div>
                 </div>
-            </section>
-
-            <!--==================== GIVING ====================-->
-
-
-            <!--==================== CELEBRATE ====================-->
-
-            <section class="celebrate section container" id="celebrate">
-                <div class="celebrate__container grid">
-                    <div class="celebrate__data">
-                        <div class="nav__togglee" id="nav__toggle"></div>
-                        <div>
-                            <h1 class="footer__title">Procedimentos</h1>
-        
-                            <ul class="footer__links">
-                                <li>
-                                   <a href="Filtro.html" class="button">Cálculo</a>
-                                </li>
-                                <li>
-                                    <a href="Lista.html" class="button">Lista</a>     
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        <!--==================== FOOTER ====================-->
-
-        <footer class="footer">
-            <div class="footer-content">
-              <p>&copy; Mateus Macedo.</p>
             </div>
-          </footer>
-          
-          
+        </section>
 
-        <!--=============== SCROLL UP ===============-->
+        <!--==================== PROCEDIMENTOS ====================-->
+        <section class="celebrate section container" id="celebrate">
+            <div class="celebrate__container grid">
+                <div class="celebrate__data">
+                    <h2 class="footer__title">Procedimentos</h2>
+                    <ul class="footer__links">
+                        <li><a href="Filtro.html" class="button">Cálculo</a></li>
+                        <li><a href="Lista.html" class="button">Lista</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-        <a href="#" class="scrollup" id="scroll-up"> 
-            <i class='bx bx-up-arrow-alt scrollup__icon' ></i>
-        </a>
+    </main>
 
-        <!--=============== SCROLL REVEAL ===============-->
+    <!--==================== FOOTER ====================-->
+    <footer class="footer">
+        <div class="footer-content container">
+            <p>&copy; Mateus Macedo.</p>
+        </div>
+    </footer>
 
-        <script src="./js/scrollreveal.min.js"></script>
+    <!--==================== SCROLL UP ====================-->
+    <a href="#" class="scrollup" id="scroll-up">
+        <i class='bx bx-up-arrow-alt scrollup__icon'></i>
+    </a>
 
-        <!--=============== SWIPER JS ===============-->
-
-        <script src="./js/swiper-bundle.min.js"></script>
-
-        <!--=============== MAIN JS ===============-->
-
-        <script src="./js/main.js"></script>
-    </body>
-</html> 
+    <!--=============== SCRIPTS ===============-->
+    <script src="./js/scrollreveal.min.js"></script>
+    <script src="./js/swiper-bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+    
+</body>
+</html>

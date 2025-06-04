@@ -477,39 +477,28 @@ function clearInputs() {
         const name = item.name.toLowerCase();
         const notes = (item.notes || "").toLowerCase();
 
-        if (name.includes(searchTerm) || notes.includes(searchTerm)) {
+        // Mostra apenas ENTRADAS
+        if ((item.operation === "Entrada") && (name.includes(searchTerm) || notes.includes(searchTerm))) {
           const li = document.createElement("li");
-          const icon = item.operation === 'Saida' ? "📤" : "📥";
-          
-          // Calcula o estoque atual para este item
+          const icon = "📥"; // apenas entradas
+
           let currentStockForItem = 0;
           const allItemsForProduct = stockData.filter(i => i.name === item.name);
-
           allItemsForProduct.forEach(i => {
-          if (i.operation === 'Entrada') {
-          currentStockForItem += i.quantity;
-          } else {
-          currentStockForItem -= i.quantity;
-        }
-
+            if (i.operation === 'Entrada') currentStockForItem += i.quantity;
+            else currentStockForItem -= i.quantity;
           });
-          
-          // Garante que o estoque não seja negativo
           currentStockForItem = Math.max(0, currentStockForItem);
-          
-          // Determina a classe do balão com base no estoque
           const balloonClass = currentStockForItem === 0 ? "stock-balloon stock-balloon-zero" : "stock-balloon";
-          
           const stockBalloon = `<span class="${balloonClass}">Estoque: ${currentStockForItem}</span>`;
-          
+
           li.innerHTML = `
-            ${icon} <strong>${item.operation}</strong> — ${item.name} ${stockBalloon}<br>
+            ${icon} ${item.name} ${stockBalloon}<br>
             🗓️ ${item.date}<br>
             🔢 Quantidade: ${item.quantity}<br>
             💰 Valor: ${item.valor}<br>
             📝 ${item.notes || "Sem observações"}
-            <div class="action-btns">
-            </div>
+            <div class="action-btns"></div>
           `;
 
           li.addEventListener("click", () => {
@@ -521,6 +510,7 @@ function clearInputs() {
         }
       });
     }
+
 
     function updateStockSummary() {
       const summaryList = document.getElementById("stock-summary");
