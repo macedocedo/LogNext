@@ -330,18 +330,18 @@
     <input
       type="text"
       id="search-input"
-      placeholder="Buscar por nome ou observações..."
+      placeholder="Buscar por c ódigo ou observações..."
       oninput="filterStockList()"
     />
 
 
         <div style="margin-top: 20px;">
       <input type="file" id="import-file" accept=".xlsx, .xls" />
-      <button onclick="importFromExcel()">Importar Excel</button>
+      <button onclick="importFromExcel()">📂 Importar Excel ⬇️</button>
     </div>
 
 
-    <button onclick="exportToExcel()">Exportar para Excel</button>
+    <button onclick="exportToExcel()">📂 Exportar para Excel ⬆️</button>
 
     <table id="data-table">
       <thead>
@@ -468,6 +468,7 @@
 
         if (!file) {
           alert("Selecione um arquivo para importar.");
+          alert("É importante que sejam enviados apenas entradas.");
           return;
         }
 
