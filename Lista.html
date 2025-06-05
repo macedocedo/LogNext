@@ -77,7 +77,7 @@
       font-family: Arial, sans-serif;
       padding: 20px;
       margin: auto;
-      max-width: 1000px; /* mobile */
+      max-width: 900px; /* mobile */
     }
 
     label {
@@ -333,15 +333,15 @@
       placeholder="Buscar por c ódigo ou observações..."
       oninput="filterStockList()"
     />
-
-
-        <div style="margin-top: 20px;">
-      <input type="file" id="import-file" accept=".xlsx, .xls" />
       <button onclick="importFromExcel()">📂 Importar Excel ⬇️</button>
+      <button onclick="exportToExcel()">📂 Exportar para Excel ⬆️</button>
+
+      <div style="margin-top: 20px;">
+      <input type="file" id="import-file" accept=".xlsx, .xls" />
     </div>
 
 
-    <button onclick="exportToExcel()">📂 Exportar para Excel ⬆️</button>
+    
 
     <table id="data-table">
       <thead>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--=============== FAVICON ===============-->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+
+  <!--=============== BOXICONS ===============-->
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+
+  <!--=============== SWIPER CSS ===============--> 
+  <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
+
+  <!--=============== CSS ===============-->
+  <link rel="stylesheet" href="./css/styles1.css" />
+
+  <title>AppLogNext - Clientes</title>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    select,
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #000000;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+    width: 100%;
+    background-color: #949694;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      max-width: 1000px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-size: 15px;
+      background-color: var(--table-bg);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      color: var(--table-text);
+    }
+    
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid var(--table-border);
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      font-weight: bold;
+    }
+
+    .edit-icon,
+    .delete-icon {
+      font-size: 20px;
+      cursor: pointer;
+      margin: 0 5px;
+      padding: 4px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .edit-icon:hover {
+      background-color: #45a049;
+      color: #fff;
+    }
+
+    .delete-icon:hover {
+      background-color: #e53835;
+      color: #fff;
+    }
+
+    .export-import {
+      display: block;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .export-import button {
+      flex: 1;
+    }
+
+    @media (max-width: 900px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--table-border);
+        border-radius: 8px;
+        padding: 10px;
+        background: var(--table-bg);
+      }
+
+      tbody td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid var(--table-border);
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
+      tbody td::before {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+        content: attr(data-label);
+      }
+
+      tbody td:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    :root {
+      --table-bg: #ffffff;
+      --table-text: #000000;
+      --table-border: #cccccc;
+      --table-header-bg: #eaeaea;
+    }
+
+    body.dark-theme {
+      --table-bg: #1e1e1e;
+      --table-text: #ffffff;
+      --table-border: #444;
+      --table-header-bg: #333;
+    }
+  </style>
+</head>
+<body>
+  <!--==================== HEADER ====================-->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/img/favicon.png" alt="" class="nav__logo-img" />
+        LogNext
+      </a>
+
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link">Início</a></li>
+          <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
+          <li class="nav__item"><a href="Estoque-Saida.html" class="nav__link">Saida</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Calculo</a></li>
+          <li class="nav__item"><a href="Clientes.html" class="nav__link active-link">Clientes</a></li>
+        </ul>
+
+        <div class="nav__close" id="nav-close">
+          <i class="bx bx-x"></i>
+        </div>
+      </div>
+
+      <div class="nav__btns">
+        <i class="bx bx-moon change-theme" id="theme-button"></i>
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-grid-alt"></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <h1>Cadastro de Clientes</h1>
+
+  <div class="export-import">
+    <button onclick="exportarClientes()">📂 Exportar para Excel ⬆️</button>
+    <input type="file" id="importar-arquivo" accept=".xlsx, .xls" style="display: none;" onchange="importarClientes()" />
+    <button onclick="document.getElementById('importar-arquivo').click()">📂 Importar Excel ⬇️</button>
+  </div>
+
+  <label for="nome">Nome*</label>
+  <input type="text" id="nome" required>
+
+  <label for="telefone">Telefone*</label>
+  <input type="tel" id="telefone" required>
+
+  <label for="email">E-mail</label>
+  <input type="email" id="email">
+
+  <label for="endereco">Endereço</label>
+  <input type="text" id="endereco">
+
+  <button onclick="salvarCliente()">Salvar Cliente</button>
+  <button onclick="limparFormulario()" style="background-color: #f0f0f0; color: #333;">Limpar Formulário</button>
+
+  <h2 style="margin-top: 40px;">Clientes Cadastrados</h2>
+
+  <div style="margin-bottom: 20px;">
+    <input type="text" id="busca-cliente" placeholder="Buscar cliente por nome ou telefone..." oninput="filtrarClientes()">
+  </div>
+
+  <table id="tabela-clientes">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
+        <th>Endereço</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script>
+    // Armazenamento de clientes
+    let clientes = JSON.parse(localStorage.getItem("clientesData")) || [];
+    let clienteEditando = null;
+
+    // Função para salvar cliente
+    // Função para salvar cliente
+    function salvarCliente() {
+      const nome = document.getElementById("nome").value.trim();
+      const telefone = document.getElementById("telefone").value.trim();
+
+      if (!nome || !telefone) {
+        alert("Por favor, preencha os campos obrigatórios (marcados com *)");
+        return;
+      }
+
+      // Verificar se já existe um cliente com o mesmo nome (ignorando caso esteja editando)
+      const nomeExistente = clientes.some(c => 
+        c.nome.toLowerCase() === nome.toLowerCase() && 
+        (clienteEditando === null || c.id !== clienteEditando.id)
+      );
+
+      if (nomeExistente) {
+        alert("Já existe um cliente cadastrado com este nome!");
+        return;
+      }
+
+      const cliente = {
+        id: Date.now(),
+        nome,
+        email: document.getElementById("email").value.trim(),
+        telefone,
+        endereco: document.getElementById("endereco").value.trim(),
+        dataCadastro: new Date().toLocaleDateString("pt-BR")
+      };
+
+      if (clienteEditando !== null) {
+        cliente.id = clienteEditando.id;
+        clientes = clientes.map(c => c.id === cliente.id ? cliente : c);
+        clienteEditando = null;
+      } else {
+        clientes.push(cliente);
+      }
+
+      localStorage.setItem("clientesData", JSON.stringify(clientes));
+      limparFormulario();
+      filtrarClientes();
+      alert("Cliente salvo com sucesso!");
+    }
+
+    // Função para limpar o formulário
+    function limparFormulario() {
+      document.getElementById("nome").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("telefone").value = "";
+      document.getElementById("endereco").value = "";
+      clienteEditando = null;
+    }
+
+    // Função para editar cliente
+    function editarCliente(id) {
+      clienteEditando = clientes.find(c => c.id === id);
+      if (!clienteEditando) return;
+
+      document.getElementById("nome").value = clienteEditando.nome;
+      document.getElementById("email").value = clienteEditando.email || "";
+      document.getElementById("telefone").value = clienteEditando.telefone;
+      document.getElementById("endereco").value = clienteEditando.endereco || "";
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Função para excluir cliente
+    function excluirCliente(id) {
+      if (confirm("Tem certeza que deseja excluir este cliente?")) {
+        clientes = clientes.filter(c => c.id !== id);
+        localStorage.setItem("clientesData", JSON.stringify(clientes));
+        filtrarClientes();
+      }
+    }
+
+    // Função para filtrar clientes
+    function filtrarClientes() {
+      const termo = document.getElementById("busca-cliente").value.toLowerCase();
+      const tbody = document.querySelector("#tabela-clientes tbody");
+      tbody.innerHTML = "";
+
+      const clientesFiltrados = termo 
+        ? clientes.filter(c => 
+            c.nome.toLowerCase().includes(termo) || 
+            c.telefone.includes(termo))
+        : clientes;
+
+      clientesFiltrados.forEach(cliente => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td data-label="Nome">${cliente.nome}</td>
+          <td data-label="E-mail">${cliente.email || "-"}</td>
+          <td data-label="Telefone">${formatarTelefone(cliente.telefone)}</td>
+          <td data-label="Endereço">${cliente.endereco || "-"}</td>
+          <td data-label="Ações">
+            <i class='bx bx-edit edit-icon' title="Editar" onclick="editarCliente(${cliente.id})"></i>
+            <i class='bx bx-trash delete-icon' title="Excluir" onclick="excluirCliente(${cliente.id})"></i>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Função para formatar telefone
+    function formatarTelefone(valor) {
+      if (!valor) return "-";
+      valor = valor.replace(/\D/g, "");
+      if (valor.length === 10) {
+        return valor.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+      } else if (valor.length === 11) {
+        return valor.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+      }
+      return valor;
+    }
+
+    // Máscara para telefone
+    document.getElementById("telefone").addEventListener("input", function(e) {
+      let value = e.target.value.replace(/\D/g, "");
+      
+      if (value.length > 11) {
+        value = value.substring(0, 11);
+      }
+      
+      if (value.length <= 10) {
+        value = value.replace(/(\d{2})(\d)/, "($1) $2");
+        value = value.replace(/(\d{4})(\d)/, "$1-$2");
+      } else {
+        value = value.replace(/(\d{2})(\d)/, "($1) $2");
+        value = value.replace(/(\d{5})(\d)/, "$1-$2");
+      }
+      
+      e.target.value = value;
+    });
+
+    // Exportar para Excel
+    function exportarClientes() {
+      const dadosParaExportar = clientes.map(cliente => ({
+        "Nome": cliente.nome,
+        "E-mail": cliente.email || "",
+        "Telefone": formatarTelefone(cliente.telefone),
+        "Endereço": cliente.endereco || "",
+        "Data Cadastro": cliente.dataCadastro
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(dadosParaExportar);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Clientes");
+      XLSX.writeFile(wb, "clientes.xlsx");
+    }
+
+// Importar do Excel
+function importarClientes() {
+  const fileInput = document.getElementById("importar-arquivo");
+  const file = fileInput.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: "array" });
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const importedData = XLSX.utils.sheet_to_json(firstSheet);
+
+    const novosClientes = importedData.map(item => {
+      const telefone = String(item["Telefone"] || "").replace(/\D/g, "");
+      return {
+        id: Date.now() + Math.floor(Math.random() * 1000),
+        nome: String(item["Nome"] || "").trim(),
+        email: String(item["E-mail"] || item["Email"] || "").trim(),
+        telefone: telefone,
+        endereco: String(item["Endereço"] || item["Endereco"] || "").trim(),
+        dataCadastro: item["Data Cadastro"] || new Date().toLocaleDateString("pt-BR")
+      };
+    }).filter(cliente => cliente.nome && cliente.telefone);
+
+    if (novosClientes.length === 0) {
+      alert("Nenhum cliente válido encontrado no arquivo!");
+      return;
+    }
+
+    // Verificar duplicados
+    const clientesExistentes = JSON.parse(localStorage.getItem("clientesData")) || [];
+    const nomesExistentes = new Set(clientesExistentes.map(c => c.nome.toLowerCase()));
+    
+    const clientesParaAdicionar = [];
+    const clientesDuplicados = [];
+    
+    novosClientes.forEach(cliente => {
+      if (nomesExistentes.has(cliente.nome.toLowerCase())) {
+        clientesDuplicados.push(cliente.nome);
+      } else {
+        clientesParaAdicionar.push(cliente);
+        nomesExistentes.add(cliente.nome.toLowerCase());
+      }
+    });
+
+    if (clientesDuplicados.length > 0) {
+      alert(`Os seguintes clientes não foram importados pois já existem:\n\n${clientesDuplicados.join("\n")}`);
+    }
+
+    if (clientesParaAdicionar.length === 0) {
+      alert("Nenhum novo cliente para importar (todos já existem)!");
+      fileInput.value = "";
+      return;
+    }
+
+    if (confirm(`Deseja importar ${clientesParaAdicionar.length} cliente(s)?\n\n(${clientesDuplicados.length} duplicados não serão importados)`)) {
+      clientes = [...clientesExistentes, ...clientesParaAdicionar];
+      localStorage.setItem("clientesData", JSON.stringify(clientes));
+      filtrarClientes();
+      alert("Clientes importados com sucesso!");
+      fileInput.value = "";
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+    // Carregar clientes ao iniciar
+    document.addEventListener("DOMContentLoaded", function() {
+      filtrarClientes();
+    });
+  </script>
+
+  <script src="./js/scrollreveal.min.js"></script>
+  <script src="./js/swiper-bundle.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
