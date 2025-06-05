@@ -193,8 +193,9 @@
 
   /* Item Selecionado */
   .selected-item {
-    background-color: #a8e6a3 !important;
-    border: 2px solid #3b873e;
+      background-color: #83ac80 !important;
+      border: 2px solid #45a049;
+      cursor: pointer;
   }
 
   /* === Balão de Estoque === */
@@ -313,7 +314,7 @@
   <input type="text" id="operation-type" value="Saida" readonly style="background-color: #d3d3d3; color: #000;">
 
   <div style="display: flex; gap: 10px;">
-    <button id="save-btn" onclick="saveStock()">Saída</button>
+    <button id="save-btn" onclick="saveStock()">Registrar Saída ✔</button>
     <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
   </div>
   

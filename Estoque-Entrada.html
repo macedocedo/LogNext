@@ -166,10 +166,11 @@
     }
 
     li.selected {
-      background-color: #a4d4ae;
+      background-color: #83ac80 !important;
       border: 2px solid #45a049;
       cursor: pointer;
     }
+
     
     /* === Balão de Estoque === */
     .stock-balloon {
@@ -288,7 +289,7 @@
   <input type="text" id="search" placeholder="🔎Buscar" oninput="searchStock()">
 
   <div style="display: flex; gap: 10px;">
-    <button id="save-btn" onclick="saveStock()">Registrar Entrada</button>
+    <button id="save-btn" onclick="saveStock()">Registrar Entrada ✔</button>
     <button id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancelar</button>
   </div>
 
@@ -296,7 +297,6 @@
     <h2>Histórico de Movimentações</h2>
     <ul id="data-list"></ul>
   </div>
-
 
   <script>
    let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
@@ -477,10 +477,8 @@
             🔢 Quantidade: ${item.quantity}<br>
             💰 Valor: ${item.valor}<br>
             📝 ${item.notes || 'Sem observações'}
-            <div class="action-btns">
-              <button class="edit-btn" onclick="event.stopPropagation(); loadStockToForm(${index})">Editar</button>
-              <button class="delete-btn" onclick="event.stopPropagation(); deleteStock(${index})">Excluir</button>
-            </div>
+            
+
           `;
           list.appendChild(li);
         }

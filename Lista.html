@@ -363,6 +363,7 @@
 
   <script>
     let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
+    let stockBalance = JSON.parse(localStorage.getItem("estoqueSaldo")) || {}; // Novo objeto para saldos
     let editIndex = -1;
 
     function formatCurrency(value) {
@@ -462,73 +463,92 @@
           filterStockList();
         }
 
-      function importFromExcel() {
-        const fileInput = document.getElementById("import-file");
-        const file = fileInput.files[0];
+    function importFromExcel() {
+      const fileInput = document.getElementById("import-file");
+      const file = fileInput.files[0];
 
-        if (!file) {
-          alert("Selecione um arquivo para importar.");
-          alert("É importante que sejam enviados apenas entradas.");
-          return;
-        }
+      if (!file) {
+        alert("Selecione um arquivo para importar.");
+        alert("Lembre-se de adicionar apenas entradas.");
+        return;
+      }
 
-        const reader = new FileReader();
-        reader.onload = function (e) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
           const data = new Uint8Array(e.target.result);
           const workbook = XLSX.read(data, { type: "array" });
           const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
           const importedData = XLSX.utils.sheet_to_json(firstSheet);
 
+          let importedCount = 0;
+          let skippedCount = 0;
+
           importedData.forEach(item => {
-            const tipo = String(item["Tipo"] || "").trim() || "Entrada";
-            const nome = String(item["Código"] || "").trim();
-            const quantidade = parseInt(item["Quantidade"] || 0);
+            // Validação dos campos obrigatórios
+            const nome = String(item["Código"] || item["Código do Produto"] || "").trim();
+            let quantidade = parseInt(item["Quantidade"] || item["Qtd"] || 0);
+            
+            if (!nome || isNaN(quantidade)) {
+              skippedCount++;
+              return;
+            }
 
-            if (!nome || isNaN(quantidade)) return;
+            // Processamento do tipo (padrão para Entrada se não especificado)
+            let tipo = String(item["Tipo"] || item["Operação"] || "Entrada").trim();
+            tipo = tipo === "Saída" ? "Saida" : tipo; // Padroniza o nome
+            tipo = ["Entrada", "Saida"].includes(tipo) ? tipo : "Entrada";
 
+            // Processamento da data
             let data = item["Data"];
             if (typeof data === "number") {
+              // Converter data do formato Excel
               const excelEpoch = new Date(Date.UTC(1899, 11, 30));
               const convertedDate = new Date(excelEpoch.getTime() + data * 86400000);
               data = convertedDate.toLocaleDateString("pt-BR");
             } else if (!data) {
               data = new Date().toLocaleDateString("pt-BR");
+            } else {
+              data = String(data);
             }
 
-            const valor = item["Valor"] || "R$ 0,00";
-            const obs = item["Observações"] || "";
+            // Processamento do valor
+            let valor = item["Valor"] || item["Valor Unitário"] || "R$ 0,00";
+            if (typeof valor === "number") {
+              valor = valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            }
+            valor = String(valor).replace("R$", "").trim();
+            valor = "R$ " + valor;
 
+            // Processamento das observações
+            const obs = String(item["Observações"] || item["Obs"] || item["Notas"] || "").trim();
+
+            // SEMPRE adiciona como novo registro, mesmo que já exista um com o mesmo nome
             const novoItem = {
               operation: tipo,
               name: nome,
               date: data,
               quantity: quantidade,
-              valor: String(valor),
-              notes: String(obs)
+              valor: valor,
+              notes: obs
             };
 
-            if (tipo === "Entrada") {
-            adicionarOuAtualizarItem(novoItem);
-            } else {
-              const itemExistente = stockData.find(item => 
-                item.name === novoItem.name && 
-                item.date === novoItem.date &&
-                item.quantity === novoItem.quantity &&
-                item.operation === novoItem.operation
-              );
-              if (!itemExistente) {
-                stockData.push(novoItem);
-              }
-            }
+            stockData.push(novoItem);
+            importedCount++;
           });
 
           localStorage.setItem("estoqueData", JSON.stringify(stockData));
           filterStockList();
-          alert("Importação concluída!");
-        };
+          
+          alert(`Importação concluída!\nNovos registros adicionados: ${importedCount}\nRegistros ignorados: ${skippedCount}`);
+        } catch (error) {
+          console.error("Erro na importação:", error);
+          alert("Ocorreu um erro durante a importação. Verifique o formato do arquivo.");
+        }
+      };
 
-        reader.readAsArrayBuffer(file);
-      }
+      reader.readAsArrayBuffer(file);
+    }
 
 
   </script>
