@@ -200,15 +200,28 @@
     
     /* Responsividade */
     @media (max-width: 768px) {
+      .container {
+        padding: 20px 10px;
+        margin: 0 auto;
+      }
+
+      .sale-form,
+      .search-bar,
+      .sales-table {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       .form-row {
         flex-direction: column;
       }
-      
+
       .sales-table {
         display: block;
         overflow-x: auto;
       }
     }
+
     
     /* Botão de tema */
     .change-theme {
