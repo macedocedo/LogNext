@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+  <link rel="stylesheet" href="./css/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="./css/styles1.css" />
+  <title>AppLogNext - Vendas</title>
+
+  <style>
+    /* ===== VARIÁVEIS CSS ===== */
+    :root {
+      --header-height: 3.5rem;
+      
+      /* Cores light mode */
+      --first-color: hsl(142, 76%, 36%);
+      --first-color-alt: hsl(142, 72%, 32%);
+      --title-color: hsl(0, 0%, 0%);
+      --text-color: hsl(0, 0%, 20%);
+      --text-color-light: hsl(0, 0%, 60%);
+      --body-color: hsl(0, 0%, 96%);
+      --container-color: hsl(0, 0%, 100%);
+      --border-color: hsl(0, 0%, 87%);
+      
+      /* Fontes */
+      --body-font: 'Poppins', sans-serif;
+      --biggest-font-size: 2rem;
+      --h1-font-size: 1.5rem;
+      --h2-font-size: 1.25rem;
+      --h3-font-size: 1rem;
+      --normal-font-size: .938rem;
+      --small-font-size: .813rem;
+      --smaller-font-size: .75rem;
+    }
+    
+    /* Dark mode */
+    body.dark-theme {
+      --first-color: hsl(142, 69%, 42%);
+      --first-color-alt: hsl(142, 65%, 36%);
+      --title-color: hsl(0, 0%, 95%);
+      --text-color: hsl(0, 0%, 85%);
+      --text-color-light: hsl(0, 0%, 70%);
+      --body-color: hsl(0, 0%, 12%);
+      --container-color: hsl(0, 0%, 18%);
+      --border-color: hsl(0, 0%, 25%);
+    }
+    
+    /* Estilos gerais */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--body-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1, h2 {
+      color: var(--title-color);
+    }
+    
+    /* Tabela de vendas */
+    .sales-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: var(--container-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      color: var(--text-color);
+    }
+    
+    .sales-table th, .sales-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .sales-table th {
+      background-color: var(--container-color);
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      color: var(--title-color);
+    }
+    
+    .sales-table tr:hover {
+      background-color: var(--body-color);
+    }
+    
+    .stock-info {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .stock-low {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+    
+    .stock-zero {
+      background-color: #ffcdd2;
+      color: #b71c1c;
+      font-weight: bold;
+    }
+    
+    /* Formulário de venda */
+    .sale-form {
+      background-color: var(--container-color);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      color: var(--text-color);
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: var(--title-color);
+    }
+    
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: var(--container-color);
+      color: var(--text-color);
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .btn-primary {
+      background-color: var(--first-color);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--first-color-alt);
+    }
+    
+    .btn-secondary {
+      background-color: #f44336;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #d32f2f;
+    }
+    
+    /* Barra de pesquisa */
+    .search-bar {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .search-bar input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: var(--container-color);
+      color: var(--text-color);
+    }
+    
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+      }
+      
+      .sales-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+    
+    /* Botão de tema */
+    .change-theme {
+      font-size: 1.25rem;
+      color: var(--title-color);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    
+    .change-theme:hover {
+      color: var(--first-color);
+    }
+  </style>
+</head>
+<body>
+  <!--==================== HEADER ====================-->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/img/favicon.png" alt="" class="nav__logo-img" />
+        LogNext
+      </a>
+
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link active-link">Início</a></li>
+          <li class="nav__item"><a href="Lista.html" class="nav__link">Lista</a></li>
+          <li class="nav__item"><a href="Estoque-Entrada.html" class="nav__link">Entrada</a></li>
+          <li class="nav__item"><a href="Filtro.html" class="nav__link">Calculo</a></li>
+          <li class="nav__item"><a href="Clientes.html" class="nav__link">Clientes</a></li>
+        </ul>
+
+        <div class="nav__close" id="nav-close">
+          <i class="bx bx-x"></i>
+        </div>
+      </div>
+      <div class="nav__btns">
+        <!-- Theme change button -->
+        <i class="bx bx-moon change-theme" id="theme-button"></i>
+        <!-- Toggle button -->
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-grid-alt"></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Processo de Venda</h1>
+    
+    <!-- Formulário de venda -->
+    <div class="sale-form">
+      <h2>Registrar Nova Venda</h2>
+      
+      <!-- Novo campo para selecionar cliente -->
+      <div class="form-group">
+        <label for="cliente">Cliente</label>
+        <input type="text" id="cliente" placeholder="Digite o nome do cliente" list="clientes-list">
+        <datalist id="clientes-list"></datalist>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="product-code">Código/Nome do Produto</label>
+          <input type="text" id="product-code" placeholder="Digite o código ou nome" list="products-list">
+          <datalist id="products-list"></datalist>
+        </div>
+        <div class="form-group">
+          <label for="product-name">Produto Selecionado</label>
+          <input type="text" id="product-name" readonly>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="quantity">Quantidade</label>
+          <input type="number" id="quantity" min="1" value="1">
+        </div>
+        <div class="form-group">
+          <label for="current-stock">Estoque Atual</label>
+          <input type="text" id="current-stock" readonly>
+        </div>
+        <div class="form-group">
+          <label for="unit-price">Preço Unitário</label>
+          <input type="text" id="unit-price" placeholder="R$ 0,00">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="payment-method">Forma de Pagamento</label>
+          <select id="payment-method">
+            <option value="dinheiro">Dinheiro</option>
+            <option value="cartao_credito">Cartão de Crédito</option>
+            <option value="cartao_debito">Cartão de Débito</option>
+            <option value="pix">PIX</option>
+            <option value="boleto">Boleto</option>
+            <option value="transferencia">Transferência Bancária</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sale-date">Data da Venda</label>
+          <input type="datetime-local" id="sale-date">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="notes">Observações</label>
+        <input type="text" id="notes" placeholder="Informações adicionais">
+      </div>
+      
+      <div class="form-row">
+        <button class="btn btn-primary" id="save-sale">Registrar Venda</button>
+        <button class="btn btn-secondary" id="cancel-sale">Cancelar</button>
+      </div>
+    </div>
+    
+    <!-- Tabela de vendas -->
+    <h2>Histórico de Vendas</h2>
+    <div class="search-bar">
+      <input type="text" id="search-sales" placeholder="Pesquisar vendas..." oninput="filterSales()">
+      <button class="btn btn-primary" onclick="filterSales()">Buscar</button>
+    </div>
+    
+    <div style="max-height: 500px; overflow-y: auto;">
+      <table class="sales-table">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Estoque Atual</th>
+            <th>Preço Unitário</th>
+            <th>Total</th>
+            <th>Data</th>
+            <th>Pagamento</th>
+            <th>Observações</th>
+          </tr>
+        </thead>
+        <tbody id="sales-table-body">
+          <!-- Dados serão preenchidos via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Dados de estoque, vendas e clientes
+    let stockData = JSON.parse(localStorage.getItem("estoqueData")) || [];
+    let salesData = JSON.parse(localStorage.getItem("vendasData")) || [];
+    let clientesData = JSON.parse(localStorage.getItem("clientesData")) || [];
+    let currentStock = {};
+    
+    // ============== TEMA DARK/LIGHT ==============
+    const themeButton = document.getElementById('theme-button');
+    const darkTheme = 'dark-theme';
+    const iconTheme = 'bx-sun';
+    
+    // Tema selecionado anteriormente (se usuário selecionou)
+    const selectedTheme = localStorage.getItem('selected-theme');
+    const selectedIcon = localStorage.getItem('selected-icon');
+    
+    // Obtemos o tema atual que a interface está exibindo validando a classe dark-theme
+    const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light';
+    const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'bx-moon' : 'bx-sun';
+    
+    // Validamos se o usuário escolheu previamente um tema
+    if (selectedTheme) {
+      // Se a validação for atendida, perguntamos qual foi o problema para saber se ativamos ou desativamos o escuro
+      document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme);
+      themeButton.classList[selectedIcon === 'bx-moon' ? 'add' : 'remove'](iconTheme);
+    }
+    
+    // Ativar/desativar o tema manualmente com o botão
+    themeButton.addEventListener('click', () => {
+      // Adicionar ou remover o tema dark / icon
+      document.body.classList.toggle(darkTheme);
+      themeButton.classList.toggle(iconTheme);
+      // Salvamos o tema e o ícone atual que o usuário escolheu
+      localStorage.setItem('selected-theme', getCurrentTheme());
+      localStorage.setItem('selected-icon', getCurrentIcon());
+    });
+    
+    // ============== FUNÇÕES DE VENDAS ==============
+    
+    // Carrega a lista de clientes para o datalist
+    function loadClientesList() {
+      const datalist = document.getElementById('clientes-list');
+      datalist.innerHTML = '';
+      
+      clientesData.forEach(cliente => {
+        const option = document.createElement('option');
+        option.value = cliente.nome;
+        datalist.appendChild(option);
+      });
+    }
+    
+    // Atualiza o estoque atual calculando entradas e saídas
+    function updateCurrentStock() {
+      currentStock = {};
+      stockData.forEach(item => {
+        if (!currentStock[item.name]) {
+          currentStock[item.name] = 0;
+        }
+        if (item.operation === "Entrada") {
+          currentStock[item.name] += item.quantity;
+        } else if (item.operation === "Saida") {
+          currentStock[item.name] -= item.quantity;
+        }
+      });
+    }
+    
+    // Inicializa a lista de produtos disponíveis
+    function initProductsList() {
+      updateCurrentStock();
+      const datalist = document.getElementById('products-list');
+      datalist.innerHTML = '';
+      
+      // Adiciona apenas produtos com estoque positivo
+      Object.keys(currentStock).forEach(product => {
+        if (currentStock[product] > 0) {
+          const option = document.createElement('option');
+          option.value = product;
+          datalist.appendChild(option);
+        }
+      });
+    }
+    
+    // Formata data
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString('pt-BR');
+    }
+    
+    // Formata moeda
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', { 
+        style: 'currency', 
+        currency: 'BRL' 
+      }).format(value);
+    }
+    
+    // Formata método de pagamento
+    function formatPaymentMethod(method) {
+      const methods = {
+        'dinheiro': 'Dinheiro',
+        'cartao_credito': 'Cartão Crédito',
+        'cartao_debito': 'Cartão Débito',
+        'pix': 'PIX',
+        'boleto': 'Boleto',
+        'transferencia': 'Transferência'
+      };
+      return methods[method] || method;
+    }
+    
+    // Renderiza a tabela de vendas
+    function renderSalesTable(sales = salesData) {
+      const tableBody = document.getElementById('sales-table-body');
+      tableBody.innerHTML = '';
+      
+      if (sales.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="9" style="text-align: center;">Nenhuma venda registrada</td>`;
+        tableBody.appendChild(row);
+        return;
+      }
+      
+      sales.forEach(sale => {
+        const currentStockQty = currentStock[sale.productName] || 0;
+        const total = sale.quantity * sale.unitPrice;
+        
+        let stockClass = 'stock-info';
+        if (currentStockQty <= 0) {
+          stockClass += ' stock-zero';
+        } else if (currentStockQty <= 5) {
+          stockClass += ' stock-low';
+        }
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${sale.cliente || 'Não informado'}</td>
+          <td>${sale.productName}</td>
+          <td>${sale.quantity}</td>
+          <td><span class="${stockClass}">${currentStockQty}</span></td>
+          <td>${formatCurrency(sale.unitPrice)}</td>
+          <td>${formatCurrency(total)}</td>
+          <td>${formatDate(sale.date)}</td>
+          <td>${formatPaymentMethod(sale.paymentMethod)}</td>
+          <td>${sale.notes || '-'}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+    
+    // Filtra vendas
+    function filterSales() {
+      const searchTerm = document.getElementById('search-sales').value.toLowerCase();
+      const filtered = salesData.filter(sale => 
+        (sale.cliente && sale.cliente.toLowerCase().includes(searchTerm)) ||
+        sale.productName.toLowerCase().includes(searchTerm) || 
+        (sale.notes && sale.notes.toLowerCase().includes(searchTerm)) ||
+        sale.paymentMethod.toLowerCase().includes(searchTerm)
+      );
+      renderSalesTable(filtered);
+    }
+    
+    // Preenche informações do produto selecionado
+    function fillProductInfo() {
+      const productName = document.getElementById('product-code').value;
+      if (!productName) return;
+      
+      // Encontra o produto no estoque
+      const product = stockData.find(item => item.name === productName);
+      if (product) {
+        document.getElementById('product-name').value = product.name;
+        document.getElementById('unit-price').value = product.valor || 'R$ 0,00';
+        
+        const stockQty = currentStock[product.name] || 0;
+        document.getElementById('current-stock').value = stockQty;
+        
+        // Altera cor conforme estoque
+        const stockInput = document.getElementById('current-stock');
+        if (stockQty <= 0) {
+          stockInput.style.color = 'red';
+        } else if (stockQty <= 5) {
+          stockInput.style.color = 'orange';
+        } else {
+          stockInput.style.color = 'green';
+        }
+      }
+    }
+    
+    // Registra nova venda
+    function registerSale() {
+      const cliente = document.getElementById('cliente').value.trim();
+      const productName = document.getElementById('product-name').value.trim();
+      const quantity = parseInt(document.getElementById('quantity').value);
+      const unitPriceStr = document.getElementById('unit-price').value;
+      const paymentMethod = document.getElementById('payment-method').value;
+      const date = document.getElementById('sale-date').value || new Date().toISOString();
+      const notes = document.getElementById('notes').value;
+      
+      // Validações
+      if (!productName || !quantity || isNaN(quantity) || quantity < 1) {
+        alert('Preencha o produto e a quantidade corretamente!');
+        return;
+      }
+      
+      // Converte preço para número
+      const unitPrice = parseFloat(unitPriceStr.replace(/[^\d,]/g, '').replace(',', '.'));
+      if (isNaN(unitPrice) || unitPrice <= 0) {
+        alert('Preço unitário inválido!');
+        return;
+      }
+      
+      // Verifica estoque
+      const stockQty = currentStock[productName] || 0;
+      if (quantity > stockQty) {
+        alert(`Estoque insuficiente! Disponível: ${stockQty}`);
+        return;
+      }
+      
+      // Cria objeto de venda
+      const sale = {
+        cliente,
+        productName,
+        quantity,
+        unitPrice,
+        paymentMethod,
+        date,
+        notes
+      };
+      
+      // Adiciona à lista de vendas
+      salesData.push(sale);
+      localStorage.setItem("vendasData", JSON.stringify(salesData));
+      
+      // Registra saída no estoque
+      const stockOut = {
+        name: productName,
+        quantity: quantity,
+        valor: formatCurrency(unitPrice),
+        notes: `Venda para ${cliente || 'cliente não informado'} - ${formatPaymentMethod(paymentMethod)}. ${notes || ''}`,
+        operation: "Saida",
+        date: new Date().toISOString()
+      };
+      
+      stockData.push(stockOut);
+      localStorage.setItem("estoqueData", JSON.stringify(stockData));
+      
+      // Atualiza interface
+      updateCurrentStock();
+      initProductsList();
+      renderSalesTable();
+      clearForm();
+      alert('Venda registrada com sucesso!');
+    }
+    
+    // Limpa formulário
+    function clearForm() {
+      document.getElementById('cliente').value = '';
+      document.getElementById('product-code').value = '';
+      document.getElementById('product-name').value = '';
+      document.getElementById('quantity').value = '1';
+      document.getElementById('unit-price').value = '';
+      document.getElementById('current-stock').value = '';
+      document.getElementById('notes').value = '';
+      // Mantém a data atual
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
+      const localISOTime = new Date(now.getTime() - (offset * 60 * 1000)).toISOString().slice(0, 16);
+      document.getElementById('sale-date').value = localISOTime;
+    }
+    
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carrega dados de clientes
+      clientesData = JSON.parse(localStorage.getItem("clientesData")) || [];
+      loadClientesList();
+      
+      // Configura data/hora atual
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
+      const localISOTime = new Date(now.getTime() - (offset * 60 * 1000)).toISOString().slice(0, 16);
+      document.getElementById('sale-date').value = localISOTime;
+      
+      // Inicializa dados
+      initProductsList();
+      renderSalesTable();
+      
+      // Event listeners
+      document.getElementById('product-code').addEventListener('change', fillProductInfo);
+      document.getElementById('save-sale').addEventListener('click', registerSale);
+      document.getElementById('cancel-sale').addEventListener('click', clearForm);
+      
+      // Formatação do preço
+      document.getElementById('unit-price').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        value = (value / 100).toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        });
+        e.target.value = value;
+      });
+    });
+  </script>
+
+  <!-- Scripts adicionais -->
+  <script src="./js/scrollreveal.min.js"></script>
+  <script src="./js/swiper-bundle.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
